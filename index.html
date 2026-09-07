@@ -274,7 +274,81 @@ if (!target?.googleEventId) {
   toast("Schedule updated");
 }
 }
-async function deleteRecord(id,occKey){const r=state.records.find(x=>x.id===id);if(!r)return;let scope='series';if(occKey&&r.recurrence?.freq!=='none'){scope=$("#recordForm")?.scope?.value||'this'}if(!confirm(scope==='this'?'Delete only this occurrence?':scope==='following'?'Delete this and all following occurrences?':'Delete the entire item/series?'))return;if(scope==='this'){r.exceptions=r.exceptions||{};r.exceptions[occKey]={...(r.exceptions[occKey]||{}),cancelled:true}}else if(scope==='following'){r.recurrence.untilBefore=occKey}else{state.records=state.records.filter(x=>x.id!==id);await deleteAttachments(id)}saveState();closeModal();renderCalendar();renderAgenda();toast('Deleted')}
+async function deleteRecord(id,occKey){
+  const r=state.records.find(x=>x.id===id);
+  if(!r)return;
+
+  let scope='series';
+
+  if(occKey&&r.recurrence?.freq!=='none'){
+    scope=$("#recordForm")?.scope?.value||'this';
+  }
+
+  if(!confirm(
+    scope==='this'
+      ?'Delete only this occurrence?'
+      :scope==='following'
+      ?'Delete this and all following occurrences?'
+      :'Delete the entire item/series?'
+  ))return;
+
+  /* Delete linked Google Calendar event */
+  if(scope==='series' && r.googleEventId){
+    const session=localStorage.getItem("neon_ops_google_session");
+
+    if(session){
+      try{
+        const response=await fetch(
+          `https://api.eliaslhx.com/api/google/calendar/events/delete?session=${encodeURIComponent(session)}`,
+          {
+            method:"POST",
+            headers:{
+              "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+              eventId:r.googleEventId
+            })
+          }
+        );
+
+        const result=await response.json();
+
+        if(!response.ok){
+          throw new Error(
+            result.error||"Google Calendar delete failed"
+          );
+        }
+
+      }catch(err){
+        console.error("Google Calendar delete:",err);
+        toast("Google deletion failed — event kept");
+        return;
+      }
+    }
+  }
+
+  /* Existing Neon Ops deletion */
+  if(scope==='this'){
+    r.exceptions=r.exceptions||{};
+    r.exceptions[occKey]={
+      ...(r.exceptions[occKey]||{}),
+      cancelled:true
+    };
+  }
+  else if(scope==='following'){
+    r.recurrence.untilBefore=occKey;
+  }
+  else{
+    state.records=state.records.filter(x=>x.id!==id);
+    await deleteAttachments(id);
+  }
+
+  saveState();
+  closeModal();
+  renderCalendar();
+  renderAgenda();
+  toast('Deleted');
+}
 async function duplicateRecord(id){const r=state.records.find(x=>x.id===id);if(!r)return;const n={...structuredClone(r),id:uid(),title:r.title+' (Copy)',exceptions:{}};state.records.push(n);await copyAttachments(id,n.id);saveState();closeModal();renderCalendar();renderAgenda();toast('Duplicated')}
 
 /* attachments */
