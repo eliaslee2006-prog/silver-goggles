@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0813">
+<title>NEON OPS V6</title>
+<style>
+:root{
+  --bg:#080910;--panel:#0f1118;--panel2:#151820;--line:#252a39;--text:#eef4ff;--muted:#929bb2;
+  --accent:#ff2aa5;--cyan:#45e8ff;--good:#65ffa8;--warn:#f3bd55;--danger:#ff5470;
+  --radius:10px;--glow:32;--hour-h:48px;
+}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 15% -10%,rgba(255,42,165,.12),transparent 30%),radial-gradient(circle at 85% 0%,rgba(69,232,255,.09),transparent 28%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}.mono{font-family:"IBM Plex Mono",Consolas,monospace}.app{min-height:100vh}.topbar{position:sticky;top:0;z-index:40;display:flex;gap:14px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);background:rgba(8,9,16,.91);backdrop-filter:blur(18px)}.brand{min-width:190px}.brand strong{display:block;font-size:14px;letter-spacing:.18em}.brand small{color:var(--muted);font-size:10px;letter-spacing:.13em}.tabs{display:flex;gap:6px;overflow:auto}.tab,.btn{border:1px solid var(--line);background:#11141c;color:var(--text);border-radius:8px;padding:8px 11px;cursor:pointer}.tab.active{border-color:color-mix(in srgb,var(--accent) 60%,var(--line));box-shadow:0 0 18px color-mix(in srgb,var(--accent) 18%,transparent);color:#fff}.spacer{flex:1}.sync-pill{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:7px 10px;color:var(--muted);font-size:11px;white-space:nowrap}.dot{width:7px;height:7px;border-radius:50%;background:#666}.dot.synced{background:var(--good);box-shadow:0 0 10px var(--good)}.dot.error{background:var(--danger);box-shadow:0 0 10px var(--danger)}.dot.pending{background:var(--warn);box-shadow:0 0 10px var(--warn)}.main{padding:14px;max-width:1800px;margin:auto}.page{display:none}.page.active{display:block}.grid{display:grid;gap:12px}.ops-grid{grid-template-columns:minmax(0,1fr) 330px}.panel{border:1px solid var(--line);background:linear-gradient(180deg,rgba(21,24,32,.94),rgba(12,14,20,.94));border-radius:var(--radius);box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden}.panel-head{display:flex;align-items:center;gap:10px;padding:11px 12px;border-bottom:1px solid var(--line)}.panel-head h2{margin:0;font-size:12px;letter-spacing:.16em}.panel-body{padding:12px}.calendar-controls{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.calendar-shell{overflow:hidden}.all-day-wrap{display:grid;grid-template-columns:56px repeat(7,minmax(110px,1fr));border-bottom:1px solid var(--line);background:#0d1017}.all-day-label{padding:8px 6px;color:var(--muted);font-size:10px;border-right:1px solid var(--line)}.all-day-col{min-height:42px;border-right:1px solid var(--line);padding:4px;display:flex;flex-direction:column;gap:3px}.day-heads{display:grid;grid-template-columns:56px repeat(7,minmax(110px,1fr));background:#0d1017;border-bottom:1px solid var(--line)}.day-head{padding:8px 6px;text-align:center;border-right:1px solid var(--line)}.day-head .dow{font-size:10px;letter-spacing:.13em;color:var(--muted)}.day-head .date{font-size:15px;margin-top:2px}.day-head.today .date{color:var(--cyan);text-shadow:0 0 14px color-mix(in srgb,var(--cyan) 55%,transparent)}.calendar-scroll{height:68vh;min-height:520px;overflow:auto}.calendar-grid{display:grid;grid-template-columns:56px repeat(7,minmax(110px,1fr));position:relative;min-height:calc(24 * var(--hour-h))}.time-col{position:relative;border-right:1px solid var(--line);background:#0c0f15}.time-label{height:var(--hour-h);font-size:9px;color:var(--muted);text-align:right;padding:3px 7px 0 0;border-top:1px solid #1a1f2b}.day-col{position:relative;border-right:1px solid var(--line);background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--hour-h) - 1px),#1a1f2b calc(var(--hour-h) - 1px),#1a1f2b var(--hour-h))}.day-col.today{background:linear-gradient(rgba(69,232,255,.025),rgba(69,232,255,.025)),repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--hour-h) - 1px),#1a1f2b calc(var(--hour-h) - 1px),#1a1f2b var(--hour-h))}.event{position:absolute;min-height:22px;padding:4px 6px;border:1px solid color-mix(in srgb,var(--event-color) 55%,#222);border-left:3px solid var(--event-color);border-radius:7px;background:linear-gradient(135deg,color-mix(in srgb,var(--event-color) 32%,#151820),color-mix(in srgb,var(--event-color) 13%,#0c0e14));box-shadow:0 0 7px color-mix(in srgb,var(--event-color) 40%,transparent),0 0 18px color-mix(in srgb,var(--event-color) 16%,transparent),inset 0 0 12px color-mix(in srgb,var(--event-color) 10%,transparent);overflow:hidden;cursor:pointer;z-index:3}.event:hover{z-index:8;filter:brightness(1.12)}.event-title{font-size:10px;font-weight:700;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.event-meta{font-size:8px;color:#cbd4e6;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.badge{display:inline-flex;align-items:center;border:1px solid currentColor;border-radius:999px;padding:1px 5px;font-size:7px;letter-spacing:.08em;margin-left:4px}.all-event{position:relative;min-height:26px;padding:4px 6px;border:1px solid color-mix(in srgb,var(--event-color) 50%,#222);border-left:3px solid var(--event-color);border-radius:6px;background:color-mix(in srgb,var(--event-color) 16%,#11141b);box-shadow:0 0 12px color-mix(in srgb,var(--event-color) 12%,transparent);font-size:9px;cursor:pointer;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.agenda{display:flex;flex-direction:column;gap:8px}.agenda-item{border:1px solid var(--line);border-left:3px solid var(--event-color);border-radius:8px;padding:9px;background:#11141c;cursor:pointer}.agenda-item:hover{border-color:color-mix(in srgb,var(--event-color) 50%,var(--line))}.agenda-item .when{font-size:9px;color:var(--muted);margin-top:4px}.empty{padding:20px;color:var(--muted);text-align:center;font-size:12px}.hero-grid{grid-template-columns:repeat(3,1fr)}.metric{padding:18px}.metric .label{font-size:10px;color:var(--muted);letter-spacing:.12em}.metric .value{font-size:28px;margin-top:8px}.placeholder{min-height:260px;display:grid;place-items:center;color:var(--muted);text-align:center;padding:30px}.field{display:flex;flex-direction:column;gap:5px}.field label{font-size:9px;letter-spacing:.1em;color:var(--muted)}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;background:#0c0f15;color:var(--text);padding:9px 10px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--cyan);box-shadow:0 0 12px rgba(69,232,255,.12)}textarea{min-height:90px;resize:vertical}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.form-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:14px}.btn.primary{border-color:color-mix(in srgb,var(--accent) 70%,var(--line));background:color-mix(in srgb,var(--accent) 15%,#11141c);box-shadow:0 0 18px color-mix(in srgb,var(--accent) 12%,transparent)}.btn.danger{border-color:color-mix(in srgb,var(--danger) 65%,var(--line));color:#ffd9df}.btn.cyan{border-color:color-mix(in srgb,var(--cyan) 65%,var(--line));color:#dffbff}.btn:disabled{opacity:.45;cursor:not-allowed}.modal-backdrop{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);display:none;place-items:center;padding:16px}.modal-backdrop.open{display:grid}.modal{width:min(720px,100%);max-height:92vh;overflow:auto;border:1px solid var(--line);border-radius:12px;background:#0d1017;box-shadow:0 0 50px rgba(0,0,0,.55)}.modal-head{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}.modal-head h3{margin:0;font-size:12px;letter-spacing:.14em}.modal-body{padding:14px}.toast-wrap{position:fixed;right:14px;bottom:14px;z-index:150;display:flex;flex-direction:column;gap:7px}.toast{border:1px solid var(--line);background:#10131a;border-radius:8px;padding:10px 12px;font-size:11px;box-shadow:0 10px 35px rgba(0,0,0,.4)}.toast.error{border-color:var(--danger)}.toast.good{border-color:var(--good)}.sync-detail{font-size:9px;color:var(--muted);margin-top:5px}.settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.module-card{padding:13px;border:1px solid var(--line);border-radius:9px;background:#10131a}.module-card strong{font-size:11px;letter-spacing:.1em}.module-card small{display:block;color:var(--muted);margin-top:5px}.status-line{display:flex;gap:8px;align-items:center;margin-top:8px;font-size:10px}.color-row{display:flex;gap:8px;align-items:center}.color-row input[type=color]{width:56px;padding:2px;height:38px}.now-line{position:absolute;left:0;right:0;height:1px;background:var(--danger);z-index:2;box-shadow:0 0 8px var(--danger)}.now-line:before{content:"";position:absolute;left:-3px;top:-3px;width:7px;height:7px;border-radius:50%;background:var(--danger)}
+@media(max-width:1050px){.ops-grid{grid-template-columns:1fr}.agenda-panel{order:2}.calendar-scroll{height:62vh}.hero-grid{grid-template-columns:1fr 1fr}.settings-grid{grid-template-columns:1fr}}
+@media(max-width:720px){.topbar{padding:9px;gap:8px}.brand{min-width:145px}.brand small{display:none}.main{padding:8px}.sync-pill span{display:none}.day-heads,.all-day-wrap,.calendar-grid{grid-template-columns:42px repeat(7,minmax(92px,1fr))}.calendar-shell{overflow-x:auto}.calendar-shell>*{min-width:760px}.hero-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.modal-backdrop{padding:8px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><strong id="brandName">NEON OPS</strong><small>PRIVATE INTELLIGENCE TERMINAL · V6</small></div>
+    <nav class="tabs" id="tabs"></nav>
+    <div class="spacer"></div>
+    <div class="sync-pill" title="Google Calendar sync status"><i id="syncDot" class="dot"></i><span id="syncText">GOOGLE OFFLINE</span></div>
+    <button class="btn cyan" id="googleBtn" onclick="toggleGoogleConnection()">CONNECT GOOGLE</button>
+  </header>
+
+  <main class="main">
+    <section class="page active" id="page-operations">
+      <div class="grid ops-grid">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>TACTICAL SCHEDULE</h2>
+            <div class="spacer"></div>
+            <div class="calendar-controls">
+              <button class="btn" onclick="moveWeek(-1)">◀</button>
+              <button class="btn" onclick="goToday()">TODAY</button>
+              <button class="btn" onclick="moveWeek(1)">▶</button>
+              <button class="btn primary" onclick="openEventModal()">+ EVENT</button>
+              <button class="btn" onclick="syncGoogleCalendar({silent:false})">SYNC</button>
+            </div>
+          </div>
+          <div class="calendar-shell">
+            <div id="dayHeads" class="day-heads"></div>
+            <div id="allDayWrap" class="all-day-wrap"></div>
+            <div class="calendar-scroll" id="calendarScroll">
+              <div id="calendarGrid" class="calendar-grid"></div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="panel agenda-panel">
+          <div class="panel-head"><h2>AGENDA</h2><div class="spacer"></div><span class="mono" id="weekLabel" style="font-size:9px;color:var(--muted)"></span></div>
+          <div class="panel-body"><div id="agenda" class="agenda"></div></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="page" id="page-finance">
+      <div class="grid hero-grid">
+        <div class="panel metric"><div class="label">MONTHLY ALLOWANCE</div><div class="value mono" id="financeAllowance">$0</div></div>
+        <div class="panel metric"><div class="label">RECORDED EXPENSES</div><div class="value mono" id="financeExpenses">$0</div></div>
+        <div class="panel metric"><div class="label">AVAILABLE</div><div class="value mono" id="financeAvailable">$0</div></div>
+      </div>
+      <div class="panel" style="margin-top:12px"><div class="panel-head"><h2>FINANCE MODULE SLOT</h2></div><div class="placeholder">V6 finance adapters plug into this page without modifying the calendar core.<br><br>FX · Portfolio · Macro · News · Alerts</div></div>
+    </section>
+
+    <section class="page" id="page-media">
+      <div class="panel"><div class="panel-head"><h2>MEDIA OPERATIONS</h2></div><div class="placeholder">Spotify and future media adapters mount here through the V6 module registry.</div></div>
+    </section>
+
+    <section class="page" id="page-customize">
+      <div class="grid settings-grid">
+        <div class="panel"><div class="panel-head"><h2>INTERFACE</h2></div><div class="panel-body">
+          <div class="field"><label>BRAND</label><input id="settingBrand" value="NEON OPS"></div>
+          <div class="field" style="margin-top:10px"><label>ACCENT</label><div class="color-row"><input id="settingAccent" type="color"><span class="mono" id="settingAccentText"></span></div></div>
+          <div class="field" style="margin-top:10px"><label>CORNER RADIUS</label><input id="settingRadius" type="range" min="0" max="24"></div>
+          <div class="field" style="margin-top:10px"><label>GLOW INTENSITY</label><input id="settingGlow" type="range" min="0" max="60"></div>
+          <div class="form-actions"><button class="btn primary" onclick="saveAppearance()">SAVE APPEARANCE</button></div>
+        </div></div>
+        <div class="panel"><div class="panel-head"><h2>MODULE REGISTRY</h2></div><div class="panel-body" id="moduleRegistry"></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-backdrop" id="modalBackdrop" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head"><h3 id="modalTitle">EVENT</h3><div class="spacer"></div><button class="btn" onclick="closeModal()">✕</button></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+const CONFIG={
+  apiBase:"https://neon-ops-api-v6.eliaslee2006.workers.dev",
+  storageKey:"neon_ops_v6",
+  sessionKey:"neon_ops_google_session_v6",
+  timeZone:"Asia/Singapore",
+  syncEveryMs:60000
+};
+const DAY=86400000;
+const modules=new Map();
+let weekStart=startOfWeek(new Date());
+let syncTimer=null;
+
+const defaultState=()=>({
+  schemaVersion:6,
+  identity:{brand:"NEON OPS"},
+  appearance:{accent:"#ff2aa5",cyan:"#45e8ff",radius:10,glow:32},
+  pages:{active:"operations"},
+  records:[],
+  integrations:{googleCalendar:{connected:false,syncToken:"",lastSyncAt:"",lastError:""}},
+  finance:{allowance:0,expenses:[],positions:[],riskLimit:20,journal:""},
+  media:{notes:""}
+});
+let state=loadState();
+
+function loadState(){
+  try{return normalizeState(JSON.parse(localStorage.getItem(CONFIG.storageKey)||"null")||defaultState())}
+  catch{return defaultState()}
+}
+function normalizeState(raw){
+  const d=defaultState();
+  const s={...d,...raw};
+  s.identity={...d.identity,...raw.identity};
+  s.appearance={...d.appearance,...raw.appearance};
+  s.pages={...d.pages,...raw.pages};
+  s.integrations={...d.integrations,...raw.integrations,googleCalendar:{...d.integrations.googleCalendar,...raw.integrations?.googleCalendar}};
+  s.finance={...d.finance,...raw.finance};s.media={...d.media,...raw.media};
+  s.records=Array.isArray(raw.records)?raw.records.map(normalizeRecord):[];
+  return s;
+}
+function normalizeRecord(r){
+  const now=new Date().toISOString();
+  return {
+    id:r.id||uid(),kind:r.kind||r.type||"event",source:r.source||"neon",provider:r.provider||((r.providerEventId||r.googleEventId)?"google":null),
+    providerEventId:r.providerEventId||r.googleEventId||r.sync?.providerEventId||"",title:r.title||"Untitled Event",category:r.category||"PERSONAL",color:r.color||"#45e8ff",
+    allDay:!!r.allDay,start:r.start||now,end:r.end||new Date(Date.now()+3600000).toISOString(),location:r.location||"",notes:r.notes||"",recurrence:Array.isArray(r.recurrence)?r.recurrence:(Array.isArray(r.recurrence?.rules)?r.recurrence.rules:[]),
+    htmlLink:r.htmlLink||r.google?.htmlLink||"",googleColorId:r.googleColorId||"",
+    sync:{status:r.sync?.status||r.syncStatus||((r.providerEventId||r.googleEventId)?"synced":"local"),lastError:r.sync?.lastError||"",lastSyncedAt:r.sync?.lastSyncedAt||"",localUpdatedAt:r.sync?.localUpdatedAt||now,providerUpdatedAt:r.sync?.providerUpdatedAt||""}
+  };
+}
+function saveState(){localStorage.setItem(CONFIG.storageKey,JSON.stringify(state));renderSyncStatus()}
+function uid(){return "neon_"+crypto.randomUUID()}
+
+function registerModule(def){modules.set(def.id,def)}
+registerModule({id:"google-calendar",name:"Google Calendar",status:()=>getSession()?"CONNECTED":"OFFLINE",description:"Bidirectional event synchronization"});
+registerModule({id:"google-tasks",name:"Google Tasks",status:()=>"PLANNED",description:"Task adapter slot"});
+registerModule({id:"spotify",name:"Spotify",status:()=>"PLANNED",description:"Media adapter slot"});
+registerModule({id:"telegram",name:"Telegram",status:()=>"PLANNED",description:"Alerts and command adapter slot"});
+registerModule({id:"finance",name:"Market Intelligence",status:()=>"PLANNED",description:"FX, macro, portfolio and news adapter slot"});
+
+function getSession(){return localStorage.getItem(CONFIG.sessionKey)||""}
+function setSession(v){v?localStorage.setItem(CONFIG.sessionKey,v):localStorage.removeItem(CONFIG.sessionKey)}
+function captureOAuthFragment(){
+  const hash=new URLSearchParams(location.hash.replace(/^#/,""));
+  const session=hash.get("session");
+  if(session&&hash.get("google")==="connected"){
+    setSession(session);state.integrations.googleCalendar.connected=true;state.integrations.googleCalendar.lastError="";saveState();
+    history.replaceState(null,"",location.pathname+location.search);toast("Google Calendar connected","good");
+  }
+}
+async function api(path,{method="GET",body,session=true}={}){
+  const headers={};if(body!==undefined)headers["Content-Type"]="application/json";
+  if(session){const s=getSession();if(!s)throw new Error("Google is not connected");headers["X-Neon-Session"]=s}
+  const res=await fetch(CONFIG.apiBase+path,{method,headers,body:body===undefined?undefined:JSON.stringify(body)});
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok){const msg=data?.error?.message||data?.error||`API request failed (${res.status})`;const err=new Error(msg);err.status=res.status;err.code=data?.error?.code;throw err}
+  return data;
+}
+async function toggleGoogleConnection(){
+  if(getSession()){
+    if(!confirm("Disconnect Google from Neon Ops V6? This does not delete calendar events."))return;
+    try{await api("/api/v6/google/session/logout",{method:"POST"})}catch{}
+    setSession("");state.integrations.googleCalendar={connected:false,syncToken:"",lastSyncAt:"",lastError:""};saveState();renderAll();return;
+  }
+  const returnTo=location.href.split("#")[0];location.href=`${CONFIG.apiBase}/auth/google?returnTo=${encodeURIComponent(returnTo)}`;
+}
+async function verifySession(){
+  if(!getSession()){state.integrations.googleCalendar.connected=false;saveState();return}
+  try{await api("/api/v6/google/session");state.integrations.googleCalendar.connected=true;state.integrations.googleCalendar.lastError="";saveState()}
+  catch(err){state.integrations.googleCalendar.connected=false;state.integrations.googleCalendar.lastError=err.message;saveState();if(err.status===401)setSession("")}
+}
+
+async function syncGoogleCalendar({silent=true,forceFull=false}={}){
+  if(!getSession())return;
+  const g=state.integrations.googleCalendar;
+  setSyncVisual("pending",silent?"SYNCING":"SYNCING…");
+  try{
+    const result=await api("/api/v6/google/calendar/sync",{method:"POST",body:{syncToken:forceFull?"":(g.syncToken||"")}});
+    for(const evt of result.events||[])mergeGoogleChange(evt);
+    g.syncToken=result.nextSyncToken||"";g.lastSyncAt=result.syncedAt||new Date().toISOString();g.lastError="";g.connected=true;
+    dedupeRecords();saveState();renderAll();if(!silent)toast(`Google sync complete · ${(result.events||[]).length} change(s)`,"good");
+  }catch(err){g.lastError=err.message;saveState();renderSyncStatus();if(!silent)toast(err.message,"error")}
+}
+function mergeGoogleChange(evt){
+  const providerId=evt.providerEventId||"";const neonId=evt.neonRecordId||"";
+  let idx=state.records.findIndex(r=>(providerId&&r.providerEventId===providerId)||(neonId&&r.id===neonId));
+  if(evt.status==="cancelled"){
+    if(idx>=0)state.records.splice(idx,1);
+    return;
+  }
+  const existing=idx>=0?state.records[idx]:null;
+  const mapped=googleEventToRecord(evt,existing);
+  if(idx>=0)state.records[idx]=mapped;else state.records.push(mapped);
+}
+function googleEventToRecord(evt,existing=null){
+  const allDay=!!evt.allDay;
+  const start=allDay?(evt.start?.date||""):(evt.start?.dateTime||"");
+  const end=allDay?(evt.end?.date||""):(evt.end?.dateTime||"");
+  const now=new Date().toISOString();
+  return normalizeRecord({
+    ...(existing||{}),id:existing?.id||evt.neonRecordId||`google_${evt.providerEventId}`,
+    source:existing?.source||"google",provider:"google",providerEventId:evt.providerEventId,title:evt.title||existing?.title||"Untitled Event",
+    category:existing?.category||"GOOGLE",color:existing?.color||"#45e8ff",allDay,start,end,location:evt.location||"",notes:evt.notes||"",
+    recurrence:evt.recurrence||[],htmlLink:evt.htmlLink||"",googleColorId:evt.googleColorId||"",
+    sync:{status:"synced",lastError:"",lastSyncedAt:now,localUpdatedAt:existing?.sync?.localUpdatedAt||now,providerUpdatedAt:evt.updatedAt||""}
+  });
+}
+function dedupeRecords(){
+  const seenProvider=new Set(),seenId=new Set();
+  state.records=state.records.filter(r=>{
+    if(seenId.has(r.id))return false;seenId.add(r.id);
+    if(r.providerEventId){if(seenProvider.has(r.providerEventId))return false;seenProvider.add(r.providerEventId)}
+    return true;
+  });
+}
+
+async function createRecord(data){
+  const rec=normalizeRecord({id:uid(),...data,source:"neon",provider:null,providerEventId:"",sync:{status:getSession()?"pending":"local",lastError:"",lastSyncedAt:"",localUpdatedAt:new Date().toISOString(),providerUpdatedAt:""}});
+  state.records.push(rec);saveState();renderAll();
+  if(!getSession())return rec;
+  try{
+    const result=await api("/api/v6/google/calendar/events",{method:"POST",body:recordToApi(rec)});
+    applyProviderResult(rec,result.event);toast("Saved to Neon Ops + Google Calendar","good");
+  }catch(err){rec.sync.status="error";rec.sync.lastError=err.message;saveState();renderAll();toast("Saved locally · Google sync failed","error")}
+  return rec;
+}
+async function updateRecord(rec,data){
+  Object.assign(rec,data);rec.sync.localUpdatedAt=new Date().toISOString();rec.sync.status=rec.providerEventId&&getSession()?"pending":(rec.providerEventId?"error":"local");rec.sync.lastError="";saveState();renderAll();
+  if(!rec.providerEventId||!getSession())return;
+  try{
+    const result=await api(`/api/v6/google/calendar/events/${encodeURIComponent(rec.providerEventId)}`,{method:"PATCH",body:recordToApi(rec)});
+    applyProviderResult(rec,result.event);toast("Event updated","good")
+  }catch(err){rec.sync.status="error";rec.sync.lastError=err.message;saveState();renderAll();toast("Local update saved · Google update failed","error")}
+}
+async function deleteRecord(rec){
+  if(!confirm(`Delete “${rec.title}”?`))return;
+  if(rec.providerEventId&&getSession()){
+    try{await api(`/api/v6/google/calendar/events/${encodeURIComponent(rec.providerEventId)}`,{method:"DELETE",body:{sendUpdates:"none"}})}
+    catch(err){toast(`Delete failed: ${err.message}`,"error");return}
+  }
+  state.records=state.records.filter(r=>r.id!==rec.id);saveState();closeModal();renderAll();toast("Deleted","good")
+}
+function applyProviderResult(rec,evt){
+  rec.provider="google";rec.providerEventId=evt.providerEventId;rec.htmlLink=evt.htmlLink||rec.htmlLink;rec.sync.status="synced";rec.sync.lastError="";rec.sync.lastSyncedAt=new Date().toISOString();rec.sync.providerUpdatedAt=evt.updatedAt||"";saveState();renderAll();
+}
+function recordToApi(rec){
+  return {clientRecordId:rec.id,title:rec.title,notes:rec.notes||"",location:rec.location||"",allDay:!!rec.allDay,start:rec.start,end:rec.end,timeZone:CONFIG.timeZone,recurrence:Array.isArray(rec.recurrence)?rec.recurrence:[],sendUpdates:"none"};
+}
+
+function renderAll(){applyAppearance();renderTabs();renderPage();renderCalendar();renderAgenda();renderFinance();renderModules();renderSyncStatus()}
+function renderTabs(){
+  const labels={operations:"OPS",finance:"FINANCE",media:"MEDIA",customize:"CUSTOMIZE"};
+  document.getElementById("tabs").innerHTML=Object.entries(labels).map(([id,label])=>`<button class="tab ${state.pages.active===id?"active":""}" onclick="setPage('${id}')">${label}</button>`).join("");
+}
+function setPage(id){state.pages.active=id;saveState();renderPage();renderTabs()}
+function renderPage(){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById(`page-${state.pages.active}`)?.classList.add("active")}
+function applyAppearance(){
+  const a=state.appearance;document.documentElement.style.setProperty("--accent",a.accent);document.documentElement.style.setProperty("--cyan",a.cyan);document.documentElement.style.setProperty("--radius",`${a.radius}px`);document.documentElement.style.setProperty("--glow",a.glow);document.getElementById("brandName").textContent=state.identity.brand;document.title=`${state.identity.brand} V6`;
+  if(document.getElementById("settingBrand")){settingBrand.value=state.identity.brand;settingAccent.value=a.accent;settingAccentText.textContent=a.accent;settingRadius.value=a.radius;settingGlow.value=a.glow}
+}
+function saveAppearance(){state.identity.brand=settingBrand.value.trim()||"NEON OPS";state.appearance.accent=settingAccent.value;state.appearance.radius=Number(settingRadius.value);state.appearance.glow=Number(settingGlow.value);saveState();renderAll();toast("Appearance saved","good")}
+settingAccent?.addEventListener("input",()=>settingAccentText.textContent=settingAccent.value);
+
+function renderSyncStatus(){
+  const g=state.integrations.googleCalendar,session=!!getSession();const dot=document.getElementById("syncDot"),txt=document.getElementById("syncText"),btn=document.getElementById("googleBtn");
+  dot.className="dot "+(g.lastError?"error":session&&g.connected?"synced":"");txt.textContent=g.lastError?"SYNC ERROR":session&&g.connected?"GOOGLE SYNCED":"GOOGLE OFFLINE";btn.textContent=session?"DISCONNECT":"CONNECT GOOGLE";btn.title=g.lastError||g.lastSyncAt||"";
+}
+function setSyncVisual(cls,text){const dot=document.getElementById("syncDot"),txt=document.getElementById("syncText");dot.className="dot "+cls;txt.textContent=text}
+function renderModules(){
+  const root=document.getElementById("moduleRegistry");if(!root)return;root.innerHTML=[...modules.values()].map(m=>`<div class="module-card" style="margin-bottom:8px"><strong>${esc(m.name)}</strong><small>${esc(m.description)}</small><div class="status-line"><i class="dot ${m.status()==="CONNECTED"?"synced":""}"></i><span>${esc(m.status())}</span></div></div>`).join("")
+}
+function renderFinance(){const total=(state.finance.expenses||[]).reduce((s,e)=>s+Number(e.amount||0),0);financeAllowance.textContent=money(state.finance.allowance);financeExpenses.textContent=money(total);financeAvailable.textContent=money(Number(state.finance.allowance||0)-total)}
+function money(n){return new Intl.NumberFormat("en-SG",{style:"currency",currency:"SGD",maximumFractionDigits:0}).format(Number(n||0))}
+
+function moveWeek(n){weekStart=addDays(weekStart,n*7);renderCalendar();renderAgenda()}
+function goToday(){weekStart=startOfWeek(new Date());renderCalendar();renderAgenda();setTimeout(()=>calendarScroll.scrollTop=Math.max(0,new Date().getHours()*48-140),0)}
+function renderCalendar(){
+  const days=Array.from({length:7},(_,i)=>addDays(weekStart,i));
+  dayHeads.innerHTML=`<div></div>`+days.map(d=>`<div class="day-head ${sameDate(d,new Date())?"today":""}"><div class="dow">${d.toLocaleDateString("en-SG",{weekday:"short"}).toUpperCase()}</div><div class="date">${d.getDate()}</div></div>`).join("");
+  allDayWrap.innerHTML=`<div class="all-day-label">ALL DAY</div>`+days.map(d=>`<div class="all-day-col" data-day="${dateKey(d)}"></div>`).join("");
+  calendarGrid.innerHTML=`<div class="time-col">${Array.from({length:24},(_,h)=>`<div class="time-label">${String(h).padStart(2,"0")}:00</div>`).join("")}</div>`+days.map(d=>`<div class="day-col ${sameDate(d,new Date())?"today":""}" data-day="${dateKey(d)}"></div>`).join("");
+  const occs=weekOccurrences(weekStart,addDays(weekStart,7));
+  for(const d of days){
+    const key=dateKey(d),all=occs.filter(o=>o.allDay&&occursOnDay(o,d));const holder=allDayWrap.querySelector(`[data-day="${key}"]`);
+    all.forEach(o=>holder.insertAdjacentHTML("beforeend",`<div class="all-event" style="--event-color:${safeColor(o.color)}" onclick="openEventModal('${o.recordId}')">${esc(o.title)}${o.source==="google"?'<span class="badge">GOOGLE</span>':""}</div>`));
+    const timed=occs.filter(o=>!o.allDay&&dateKey(new Date(o.start))===key);const layouts=layoutDayEvents(timed);
+    const col=calendarGrid.querySelector(`.day-col[data-day="${key}"]`);
+    for(const o of layouts){
+      const s=new Date(o.start),e=new Date(o.end),startMin=s.getHours()*60+s.getMinutes(),dur=Math.max(24,(e-s)/60000*.8);const top=startMin*.8;
+      const left=o.lanes===1?4:`calc(${(o.lane/o.lanes)*100}% + 3px)`;const width=o.lanes===1?"calc(100% - 8px)":`calc(${100/o.lanes}% - 6px)`;
+      col.insertAdjacentHTML("beforeend",`<div class="event" style="--event-color:${safeColor(o.color)};top:${top}px;height:${dur}px;left:${left};width:${width}" onclick="openEventModal('${o.recordId}')"><div class="event-title">${esc(o.title)}${o.source==="google"?'<span class="badge">GOOGLE</span>':""}</div><div class="event-meta">${timeLabel(s)}–${timeLabel(e)}${o.location?` · ${esc(o.location)}`:""}</div></div>`)
+    }
+    if(sameDate(d,new Date())){const now=new Date(),top=(now.getHours()*60+now.getMinutes())*.8;col.insertAdjacentHTML("beforeend",`<div class="now-line" style="top:${top}px"></div>`)}
+  }
+  weekLabel.textContent=`${shortDate(weekStart)} — ${shortDate(addDays(weekStart,6))}`;
+}
+function weekOccurrences(start,end){
+  const out=[];for(const r of state.records){for(const o of expandRecord(r,start,end))out.push(o)}return out.sort((a,b)=>eventStartMs(a)-eventStartMs(b));
+}
+function expandRecord(r,rangeStart,rangeEnd){
+  const base={recordId:r.id,title:r.title,source:r.source,color:r.color,location:r.location,allDay:r.allDay,start:r.start,end:r.end};
+  if(!r.recurrence?.length){return eventIntersects(base,rangeStart,rangeEnd)?[base]:[]}
+  const rule=r.recurrence.find(x=>String(x).startsWith("RRULE:"));if(!rule)return eventIntersects(base,rangeStart,rangeEnd)?[base]:[];
+  const p=Object.fromEntries(rule.slice(6).split(";").map(x=>x.split("=")));const freq=p.FREQ,interval=Math.max(1,Number(p.INTERVAL||1));const byday=(p.BYDAY||"").split(",").filter(Boolean);const until=p.UNTIL?parseUntil(p.UNTIL):null;const count=p.COUNT?Number(p.COUNT):Infinity;
+  const baseS=parseEventStart(r),baseE=parseEventEnd(r),dur=baseE-baseS,res=[];let emitted=0;
+  const cursor=new Date(baseS);cursor.setHours(0,0,0,0);const rangeCursor=new Date(rangeStart);rangeCursor.setHours(0,0,0,0);
+  const dayCodes=["SU","MO","TU","WE","TH","FR","SA"];
+  for(let d=new Date(cursor);d<rangeEnd&&emitted<count;d=addDays(d,1)){
+    const daysFrom=Math.floor((d-cursor)/DAY);let matches=false;
+    if(freq==="DAILY")matches=daysFrom%interval===0;
+    else if(freq==="WEEKLY"){const weeks=Math.floor(daysFrom/7);matches=weeks%interval===0&&(byday.length?byday.some(x=>x.slice(-2)===dayCodes[d.getDay()]):d.getDay()===baseS.getDay())}
+    else if(freq==="MONTHLY"){const months=(d.getFullYear()-baseS.getFullYear())*12+d.getMonth()-baseS.getMonth();matches=months>=0&&months%interval===0&&d.getDate()===baseS.getDate()}
+    else if(freq==="YEARLY"){const years=d.getFullYear()-baseS.getFullYear();matches=years>=0&&years%interval===0&&d.getMonth()===baseS.getMonth()&&d.getDate()===baseS.getDate()}
+    if(!matches)continue;
+    const occStart=new Date(d);if(r.allDay){const sd=dateKey(occStart),daysDur=Math.max(1,Math.round((parseEventEnd(r)-parseEventStart(r))/DAY));const occ={...base,start:sd,end:dateKey(addDays(occStart,daysDur))};if(eventIntersects(occ,rangeStart,rangeEnd))res.push(occ)}
+    else{occStart.setHours(baseS.getHours(),baseS.getMinutes(),baseS.getSeconds(),0);if(until&&occStart>until)break;const occ={...base,start:occStart.toISOString(),end:new Date(occStart.getTime()+dur).toISOString()};if(eventIntersects(occ,rangeStart,rangeEnd))res.push(occ)}
+    emitted++;
+  }
+  return res;
+}
+function layoutDayEvents(items){
+  const sorted=[...items].sort((a,b)=>new Date(a.start)-new Date(b.start));const result=[];let cluster=[],clusterEnd=-Infinity;
+  const flush=()=>{if(!cluster.length)return;const laneEnds=[];for(const o of cluster){const s=new Date(o.start).getTime(),e=new Date(o.end).getTime();let lane=laneEnds.findIndex(x=>x<=s);if(lane<0){lane=laneEnds.length;laneEnds.push(e)}else laneEnds[lane]=e;result.push({...o,lane,_cluster:cluster})}const lanes=laneEnds.length;result.slice(-cluster.length).forEach(x=>x.lanes=lanes);cluster=[];clusterEnd=-Infinity};
+  for(const o of sorted){const s=new Date(o.start).getTime(),e=new Date(o.end).getTime();if(cluster.length&&s>=clusterEnd)flush();cluster.push(o);clusterEnd=Math.max(clusterEnd,e)}flush();return result;
+}
+function renderAgenda(){
+  const now=new Date(),end=addDays(now,7);const occs=state.records.flatMap(r=>expandRecord(r,now,end)).sort((a,b)=>eventStartMs(a)-eventStartMs(b)).slice(0,30);
+  agenda.innerHTML=occs.length?occs.map(o=>`<div class="agenda-item" style="--event-color:${safeColor(o.color)}" onclick="openEventModal('${o.recordId}')"><strong>${esc(o.title)}</strong><div class="when mono">${agendaWhen(o)}</div>${o.location?`<div class="sync-detail">${esc(o.location)}</div>`:""}</div>`).join(""):`<div class="empty">No upcoming events.</div>`;
+}
+function agendaWhen(o){if(o.allDay)return `${shortDate(parseEventStart(o))} · ALL DAY`;const d=new Date(o.start);return `${shortDate(d)} · ${timeLabel(d)}`}
+
+function openEventModal(id=""){
+  const rec=id?state.records.find(r=>r.id===id):null;const start=rec?parseEventStart(rec):roundToHalfHour(new Date()),end=rec?parseEventEnd(rec):new Date(roundToHalfHour(new Date()).getTime()+3600000);const allDay=!!rec?.allDay;
+  modalTitle.textContent=rec?"EDIT EVENT":"NEW EVENT";
+  modalBody.innerHTML=`<form id="eventForm"><div class="form-grid"><div class="field" style="grid-column:1/-1"><label>TITLE</label><input name="title" required value="${escAttr(rec?.title||"")}"></div><div class="field"><label>CATEGORY</label><select name="category">${["OPERATIONS","WORK","STUDY","TRAINING","FITNESS","PERSONAL","FINANCE","TRAVEL","RECOVERY","GOOGLE","OTHER"].map(c=>`<option ${c===(rec?.category||"PERSONAL")?"selected":""}>${c}</option>`).join("")}</select></div><div class="field"><label>COLOR</label><input name="color" type="color" value="${safeColor(rec?.color||"#45e8ff")}"></div><div class="field"><label>ALL DAY</label><select name="allDay" onchange="toggleEventTimeFields()"><option value="false" ${!allDay?"selected":""}>TIMED</option><option value="true" ${allDay?"selected":""}>ALL DAY</option></select></div><div></div><div class="field timed-field"><label>START</label><input name="startTimed" type="datetime-local" value="${toLocalInput(start)}"></div><div class="field timed-field"><label>END</label><input name="endTimed" type="datetime-local" value="${toLocalInput(end)}"></div><div class="field allday-field"><label>START DATE</label><input name="startDate" type="date" value="${dateKey(start)}"></div><div class="field allday-field"><label>END DATE (DISPLAYED THROUGH)</label><input name="endDate" type="date" value="${dateKey(addDays(end,-1))}"></div><div class="field"><label>LOCATION</label><input name="location" value="${escAttr(rec?.location||"")}"></div><div></div><div class="field" style="grid-column:1/-1"><label>NOTES</label><textarea name="notes">${esc(rec?.notes||"")}</textarea></div></div>${rec?`<div class="sync-detail">SOURCE: ${esc(rec.source.toUpperCase())} · SYNC: ${esc((rec.sync?.status||"local").toUpperCase())}${rec.sync?.lastError?` · ${esc(rec.sync.lastError)}`:""}</div>`:""}<div class="form-actions">${rec?.htmlLink?`<button class="btn cyan" type="button" onclick="window.open('${escAttr(rec.htmlLink)}','_blank','noopener')">OPEN GOOGLE</button>`:""}${rec?`<button class="btn danger" type="button" id="deleteEventBtn">DELETE</button>`:""}<button class="btn" type="button" onclick="closeModal()">CANCEL</button><button class="btn primary" type="submit">SAVE</button></div></form>`;
+  toggleEventTimeFields();eventForm.onsubmit=async e=>{e.preventDefault();const data=formEventData(eventForm);if(!data)return;disableForm(true);try{rec?await updateRecord(rec,data):await createRecord(data);closeModal();renderAll()}finally{disableForm(false)}};if(rec)deleteEventBtn.onclick=()=>deleteRecord(rec);modalBackdrop.classList.add("open")
+}
+function formEventData(form){
+  const fd=Object.fromEntries(new FormData(form));const allDay=fd.allDay==="true";let start,end;
+  if(allDay){if(!fd.startDate||!fd.endDate){toast("Choose start and end dates","error");return null}start=fd.startDate;end=dateKey(addDays(parseLocalDate(fd.endDate),1))}
+  else{start=new Date(fd.startTimed);end=new Date(fd.endTimed);if(!Number.isFinite(start.getTime())||!Number.isFinite(end.getTime())||end<=start){toast("End must be after start","error");return null}start=start.toISOString();end=end.toISOString()}
+  return {kind:"event",title:fd.title.trim(),category:fd.category,color:fd.color,allDay,start,end,location:fd.location||"",notes:fd.notes||""};
+}
+function toggleEventTimeFields(){const all=eventForm?.allDay?.value==="true";document.querySelectorAll(".timed-field").forEach(x=>x.style.display=all?"none":"flex");document.querySelectorAll(".allday-field").forEach(x=>x.style.display=all?"flex":"none")}
+function disableForm(v){eventForm?.querySelectorAll("button,input,select,textarea").forEach(x=>x.disabled=v)}
+function closeModal(){modalBackdrop.classList.remove("open")}
+
+function startOfWeek(d){const x=new Date(d);x.setHours(0,0,0,0);const day=(x.getDay()+6)%7;x.setDate(x.getDate()-day);return x}
+function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
+function dateKey(d){const x=d instanceof Date?d:new Date(d);return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,"0")}-${String(x.getDate()).padStart(2,"0")}`}
+function parseLocalDate(s){const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)}
+function sameDate(a,b){return dateKey(a)===dateKey(b)}
+function shortDate(d){return d.toLocaleDateString("en-SG",{day:"2-digit",month:"short"}).toUpperCase()}
+function timeLabel(d){return d.toLocaleTimeString("en-SG",{hour:"2-digit",minute:"2-digit",hour12:false})}
+function toLocalInput(d){const x=new Date(d),p=n=>String(n).padStart(2,"0");return `${x.getFullYear()}-${p(x.getMonth()+1)}-${p(x.getDate())}T${p(x.getHours())}:${p(x.getMinutes())}`}
+function roundToHalfHour(d){const x=new Date(d);x.setSeconds(0,0);x.setMinutes(Math.ceil(x.getMinutes()/30)*30);return x}
+function parseEventStart(r){return r.allDay?parseLocalDate(typeof r.start==="string"?r.start.slice(0,10):r.start):new Date(r.start)}
+function parseEventEnd(r){return r.allDay?parseLocalDate(typeof r.end==="string"?r.end.slice(0,10):r.end):new Date(r.end)}
+function eventStartMs(o){return parseEventStart(o).getTime()}
+function eventIntersects(o,s,e){return parseEventEnd(o)>s&&parseEventStart(o)<e}
+function occursOnDay(o,d){const s=parseEventStart(o),e=parseEventEnd(o),ds=new Date(d);ds.setHours(0,0,0,0);return e>ds&&s<addDays(ds,1)}
+function parseUntil(v){if(/^\d{8}T\d{6}Z$/.test(v))return new Date(`${v.slice(0,4)}-${v.slice(4,6)}-${v.slice(6,8)}T${v.slice(9,11)}:${v.slice(11,13)}:${v.slice(13,15)}Z`);return new Date(v)}
+function safeColor(c){return /^#[0-9a-fA-F]{6}$/.test(c||"")?c:"#45e8ff"}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function escAttr(s){return esc(s)}
+function toast(msg,type=""){const el=document.createElement("div");el.className=`toast ${type}`;el.textContent=msg;toastWrap.appendChild(el);setTimeout(()=>el.remove(),3600)}
+
+async function boot(){
+  captureOAuthFragment();renderAll();await verifySession();renderAll();if(getSession())await syncGoogleCalendar({silent:true});
+  setTimeout(()=>calendarScroll.scrollTop=Math.max(0,new Date().getHours()*48-140),50);
+  syncTimer=setInterval(()=>{if(getSession()&&!document.hidden)syncGoogleCalendar({silent:true})},CONFIG.syncEveryMs);
+  document.addEventListener("visibilitychange",()=>{if(!document.hidden&&getSession())syncGoogleCalendar({silent:true})});
+}
+boot();
+</script>
+</body>
+</html>
