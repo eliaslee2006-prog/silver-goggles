@@ -270,7 +270,7 @@ renderAgenda();
 if (!target?.googleEventId) {
   toast("Schedule updated");
 }
-}}
+}
 async function deleteRecord(id,occKey){const r=state.records.find(x=>x.id===id);if(!r)return;let scope='series';if(occKey&&r.recurrence?.freq!=='none'){scope=$("#recordForm")?.scope?.value||'this'}if(!confirm(scope==='this'?'Delete only this occurrence?':scope==='following'?'Delete this and all following occurrences?':'Delete the entire item/series?'))return;if(scope==='this'){r.exceptions=r.exceptions||{};r.exceptions[occKey]={...(r.exceptions[occKey]||{}),cancelled:true}}else if(scope==='following'){r.recurrence.untilBefore=occKey}else{state.records=state.records.filter(x=>x.id!==id);await deleteAttachments(id)}saveState();closeModal();renderCalendar();renderAgenda();toast('Deleted')}
 async function duplicateRecord(id){const r=state.records.find(x=>x.id===id);if(!r)return;const n={...structuredClone(r),id:uid(),title:r.title+' (Copy)',exceptions:{}};state.records.push(n);await copyAttachments(id,n.id);saveState();closeModal();renderCalendar();renderAgenda();toast('Duplicated')}
 
