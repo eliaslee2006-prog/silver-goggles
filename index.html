@@ -255,7 +255,6 @@ if (!id && target?.type === "event") {
       }
 
       target.googleEventId = result.event?.id || "";
-      target.source = "google";
       target.syncStatus = "synced";
       saveState();
 
