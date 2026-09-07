@@ -203,7 +203,22 @@ function eventColor(r){return r.color||({task:'#f3bd55',event:'#45e8ff'}[r.type]
 function captureGoogleSession(){const u=new URL(location.href),session=u.searchParams.get('session');if(session){googleSession=session;localStorage.setItem(GOOGLE_SESSION_KEY,session);u.searchParams.delete('session');u.searchParams.delete('google');history.replaceState(null,'',u.pathname+(u.search?u.search:'')+(u.hash||''));toast('Google Calendar connected')}}
 function googleRangeKey(start,end){return localDateKey(start)+'|'+localDateKey(end)}
 async function ensureGoogleRange(start,end){if(!googleSession)return[];const key=googleRangeKey(start,end);if(googleFetches.has(key))return googleFetches.get(key);const p=(async()=>{try{const qs=new URLSearchParams({session:googleSession,start:localDateKey(start),end:localDateKey(end)});const res=await fetch('https://api.eliaslhx.com/api/google/calendar/events?'+qs.toString(),{headers:{Accept:'application/json'}});const data=await res.json().catch(()=>({}));if(!res.ok){if(res.status===401)toast('Google session expired — reconnect Google');else toast('Google Calendar sync failed');throw new Error(data?.error||'Google Calendar request failed')}const mapped=(data.events||[]).map(g=>({id:g.id||('google:'+g.googleEventId),seriesId:g.id||('google:'+g.googleEventId),occKey:g.start||g.id,googleEventId:g.googleEventId,source:'google',syncStatus:g.syncStatus||'synced',type:'event',title:g.title||'Untitled Event',start:new Date(g.start),end:new Date(g.end),allDay:!!g.allDay,location:g.location||'',notes:g.notes||'',status:g.status||'confirmed',htmlLink:g.htmlLink||'',color:'#45e8ff',recurrence:{freq:'none'},trackCompletion:false})).filter(x=>Number.isFinite(x.start.getTime())&&Number.isFinite(x.end.getTime()));googleEvents=googleEvents.filter(x=>!(x.start<end&&x.end>start));googleEvents.push(...mapped);return mapped}catch(err){console.error(err);return[]}})();googleFetches.set(key,p);setTimeout(()=>googleFetches.delete(key),30000);return p}
-function googleOccurrences(start,end){return googleEvents.filter(o=>o.end>start&&o.start<end).sort((a,b)=>a.start-b.start)}
+function googleOccurrences(start,end){
+  const linkedGoogleIds = new Set(
+    state.records
+      .map(r => r.googleEventId)
+      .filter(Boolean)
+  );
+
+  return googleEvents
+    .filter(
+      o =>
+        o.end > start &&
+        o.start < end &&
+        !linkedGoogleIds.has(o.googleEventId)
+    )
+    .sort((a,b)=>a.start-b.start);
+}
 function openGoogleEvent(o){const when=o.allDay?`${fmtDate(o.start)} // ALL DAY`:`${fmtDate(o.start)} // ${fmtTime(o.start)}–${fmtTime(o.end)}`;openModal('Google Calendar Event',`<div class="section-label">GOOGLE // SYNCED</div><h2 style="margin:0 0 12px">${esc(o.title)}</h2><div class="workspace-note">${esc(when)}</div>${o.location?`<div class="workspace-note" style="margin-top:8px">LOCATION // ${esc(o.location)}</div>`:''}${o.notes?`<div style="margin-top:14px;white-space:pre-wrap">${esc(o.notes)}</div>`:''}<div class="form-actions">${o.htmlLink?`<button class="btn primary" id="openGoogleLink">OPEN IN GOOGLE CALENDAR</button>`:''}<button class="btn" onclick="closeModal()">CLOSE</button></div>`);if(o.htmlLink)document.getElementById('openGoogleLink')?.addEventListener('click',()=>window.open(o.htmlLink,'_blank','noopener,noreferrer'))}
 
 /* calendar */
