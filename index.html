@@ -1,13 +1,16 @@
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#09090d">
-<meta name="description" content="Neon Operations Center — tactical operations and financial intelligence dashboard">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="#09090d" name="theme-color"/>
+<meta content="Neon Operations Center — tactical operations and financial intelligence dashboard" name="description"/>
 <title>Neon Operations Center</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
+<style>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
 :root{
   --bg:#09090d;--surface:#111217;--surface2:#171820;--surface3:#1d1b24;
   --text:#f2efe8;--muted:#9d9aa5;--faint:#686671;--line:#302e38;
@@ -166,244 +169,209 @@ td.mono{font-size:11px}
  .calendar-shell{margin:0 -13px}.calendar{min-width:760px}
 }
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+
+/* WORKSPACE / CUSTOMIZE V3 */
+:root{--ui-font:"Inter",system-ui,sans-serif;--data-font:"IBM Plex Mono",monospace}
+body{font-family:var(--ui-font)}
+.eyebrow,.mono,.status,.meta,.module-id,.tiny,.clock .time,.clock .date,.metric-label,.metric-value,.metric-sub,.field label,.alarm-state,.day-head,.time-label,.event small,.task-meta,th,td.mono,.badge,.risk-item span:last-child,.slider-value,.toast,.alarm-banner{font-family:var(--data-font)}
+.page-nav{display:flex;gap:8px;align-items:center;overflow:auto;padding:12px 0 2px;scrollbar-width:none}.page-nav::-webkit-scrollbar{display:none}
+.page-tab{white-space:nowrap;border:1px solid var(--line);background:transparent;color:var(--muted);padding:10px 14px;border-radius:999px;font:700 10px var(--data-font);letter-spacing:.1em}.page-tab.active{color:var(--cyan);border-color:color-mix(in srgb,var(--cyan) 55%,var(--line));background:color-mix(in srgb,var(--cyan) 8%,transparent)}
+.page-view{display:none}.page-view.active{display:grid}.customize-view{display:none}.customize-view.active{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.customize-main{grid-column:span 8}.customize-side{grid-column:span 4}
+.custom-section{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06)}.custom-section:last-child{border-bottom:0}
+.custom-module-list{display:grid;gap:8px}.custom-module-row{display:grid;grid-template-columns:minmax(150px,1fr) 140px 110px auto;gap:8px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.015)}
+.custom-module-name b{display:block;font-size:13px}.custom-module-name small{font:9px var(--data-font);color:var(--muted)}
+.custom-module-actions{display:flex;gap:5px;justify-content:flex-end}.custom-module-actions button{padding:7px 9px}
+.identity-preview{padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--surface2)}
+.workspace-note{font:10px/1.5 var(--data-font);color:var(--muted)}
+.alarm-panel-v3{display:grid;grid-template-columns:minmax(180px,1.25fr) minmax(220px,1fr) minmax(190px,.8fr);gap:18px;align-items:center}
+.alarm-config{display:grid;grid-template-columns:1fr;gap:10px}.next-alarm{font:700 12px var(--data-font);color:var(--cyan);margin-top:8px}.alarm-label{font:10px var(--data-font);color:var(--muted);margin-top:5px}
+.arm-zone{display:grid;gap:9px}.arm-switch{position:relative;display:block;width:100%;height:54px}.arm-switch input{position:absolute;opacity:0;pointer-events:none}.arm-track{position:absolute;inset:0;border:1px solid var(--line);border-radius:999px;background:#0d0e13;transition:.2s;overflow:hidden}.arm-track:before{content:"DISARMED";position:absolute;left:17px;top:50%;transform:translateY(-50%);font:700 9px var(--data-font);letter-spacing:.12em;color:var(--muted)}.arm-track:after{content:"ARMED";position:absolute;right:19px;top:50%;transform:translateY(-50%);font:700 9px var(--data-font);letter-spacing:.12em;color:var(--faint)}
+.arm-knob{position:absolute;z-index:2;width:42px;height:42px;left:6px;top:6px;border-radius:50%;background:var(--surface3);border:1px solid #4a4754;transition:.22s;box-shadow:0 4px 14px rgba(0,0,0,.35)}.arm-switch input:checked~.arm-track{border-color:color-mix(in srgb,var(--cyan) 65%,var(--line));background:color-mix(in srgb,var(--cyan) 9%,#0d0e13)}.arm-switch input:checked~.arm-knob{left:calc(100% - 48px);background:var(--cyan);border-color:var(--cyan);box-shadow:0 0 22px color-mix(in srgb,var(--cyan) 40%,transparent)}
+.alarm-capability{font:9px/1.45 var(--data-font);color:var(--muted)}
+.event{padding-right:28px;touch-action:manipulation;cursor:pointer}.event-drag{position:absolute;right:3px;top:3px;width:22px;height:22px;border:1px solid rgba(255,255,255,.12);border-radius:5px;display:grid;place-items:center;font:700 12px var(--data-font);color:#d7d7dd;cursor:grab;touch-action:none;background:rgba(0,0,0,.22)}.event-drag:active{cursor:grabbing}.event .resize{touch-action:none}
+.media-now{display:grid;grid-template-columns:110px 1fr;gap:16px;align-items:center}.album-art{aspect-ratio:1;border:1px solid var(--line);border-radius:10px;background:linear-gradient(145deg,var(--surface3),var(--surface2));display:grid;place-items:center;font:700 28px var(--data-font);color:var(--muted)}.media-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.media-progress{height:5px;background:#292832;border-radius:99px;overflow:hidden;margin-top:12px}.media-progress i{display:block;height:100%;width:0;background:var(--cyan)}
+@media(max-width:1000px){.customize-main,.customize-side{grid-column:span 12}.alarm-panel-v3{grid-template-columns:1fr 1fr}.arm-zone{grid-column:span 2}.custom-module-row{grid-template-columns:1fr 130px 100px}.custom-module-actions{grid-column:1/-1;justify-content:flex-start}}
+@media(max-width:700px){.page-nav{padding-top:10px}.alarm-panel-v3{grid-template-columns:1fr}.arm-zone{grid-column:auto}.custom-module-row{grid-template-columns:1fr}.custom-module-actions{grid-column:auto}.media-now{grid-template-columns:78px 1fr}.toolbar.workspace-actions{display:grid;grid-template-columns:1fr 1fr}.toolbar.workspace-actions .btn{width:100%}}
 </style>
 </head>
 <body>
 <div class="alarm-banner" id="alarmBanner">ALARM ACTIVE — <button class="btn danger" onclick="stopAlarm()">STOP ALARM</button></div>
-
 <div class="app">
 <header class="topbar">
-  <div>
-    <div class="eyebrow">TACTICAL OPERATIONS // FINANCIAL INTELLIGENCE</div>
-    <div class="brand">NEON <span>OPERATIONS CENTER</span></div>
-    <div class="subbrand">Private operational terminal — local-first, integration-ready</div>
-  </div>
-  <div class="clock">
-    <div class="time" id="topTime">00:00:00</div>
-    <div class="date" id="topDate">—</div>
-  </div>
-</header>
-
-<div class="toolbar">
-  <button class="btn primary" onclick="openEventModal()">+ EVENT</button>
-  <button class="btn" onclick="openTaskModal()">+ TASK</button>
-  <button class="btn" onclick="startVoice()">◉ VOICE INPUT</button>
-  <button class="btn" onclick="syncGoogle()">SYNC GOOGLE</button>
-  <button class="btn ai" onclick="generateWeeklyReview()">GENERATE WEEKLY REVIEW</button>
-  <button class="btn ai" id="designLabBtn" onclick="openDesignLab()">DESIGN LAB</button>
-  <button class="btn" onclick="exportData()">EXPORT DATA</button>
-  <button class="btn" onclick="document.getElementById('importFile').click()">IMPORT</button>
-  <input id="importFile" type="file" accept=".json" hidden onchange="importData(event)">
+<div>
+<div class="eyebrow" id="brandEyebrow">TACTICAL OPERATIONS // FINANCIAL INTELLIGENCE</div>
+<div class="brand" id="brandName">NEON OPERATIONS CENTER</div>
+<div class="subbrand" id="brandSubtitle">Private operational terminal — local-first, integration-ready</div>
 </div>
+<div class="clock">
+<div class="time" id="topTime">00:00:00</div>
+<div class="date" id="topDate">—</div>
+</div>
+</header>
+<nav aria-label="Workspace pages" class="page-nav" id="pageNav"></nav><div class="toolbar workspace-actions">
+<button class="btn primary" onclick="openEventModal()">+ EVENT</button>
+<button class="btn" onclick="openTaskModal()">+ TASK</button>
+<button class="btn" onclick="startVoice()">◉ VOICE INPUT</button>
+<button class="btn" onclick="syncGoogle()">SYNC GOOGLE</button>
+<button class="btn ai" onclick="generateWeeklyReview()">GENERATE WEEKLY REVIEW</button>
 
-<main class="dashboard">
-<section class="module span-4" id="alarmModule">
-  <div class="module-head"><div class="module-title">Clock / Alarm</div><div class="module-id">01 / 12</div></div>
-  <div class="module-body">
-    <div class="alarm-panel">
-      <div><div class="big-time" id="mainTime">00:00:00</div><div class="alarm-state" id="alarmState">ALARM DISARMED</div></div>
-      <div class="grid2">
-        <div class="field"><label>Alarm</label><input id="alarmInput" type="time" step="1"></div>
-        <div class="form-actions"><button class="btn primary" onclick="armAlarm()">ARM</button><button class="btn" onclick="disarmAlarm()">DISARM</button></div>
-      </div>
-    </div>
-  </div>
+<button class="btn" onclick="exportData()">EXPORT DATA</button>
+<button class="btn" onclick="document.getElementById('importFile').click()">IMPORT</button>
+<input accept=".json" hidden="" id="importFile" onchange="importData(event)" type="file"/>
+</div>
+<div id="workspaceHost"><main class="dashboard page-view" data-page="operations" id="page-operations"><section class="module span-12" data-label="Weekly Operational Calendar" data-module="calendar">
+<div class="module-head"><div class="module-title">Weekly Operational Calendar</div><div class="module-id">02 / 12</div></div>
+<div class="module-body">
+<div class="calendar-toolbar">
+<button class="btn" onclick="shiftWeek(-1)">← PREVIOUS</button>
+<strong id="weekLabel">CURRENT WEEK</strong>
+<button class="btn" onclick="shiftWeek(1)">NEXT →</button>
+<button class="btn primary" onclick="goToday()">TODAY</button>
+</div>
+<div class="calendar-shell"><div class="calendar" id="calendar"></div></div>
+</div>
+</section><section class="module span-4" data-label="Clock / Alarm" data-module="alarm" id="alarmModule">
+<div class="module-head"><div class="module-title">Clock / Alarm</div><div class="module-id">01 / 12</div></div>
+<div class="module-body"><div class="alarm-panel-v3">
+<div><div class="big-time" id="mainTime">00:00:00</div><div class="alarm-state" id="alarmState">ALARM DISARMED</div><div class="next-alarm" id="nextAlarm">NO ALARM SET</div><div class="alarm-label" id="alarmLabelDisplay">—</div></div>
+<div class="alarm-config"><div class="field"><label>Alarm time</label><input id="alarmInput" type="time"/></div><div class="field"><label>Label</label><input id="alarmLabel" maxlength="48" oninput="updateAlarmConfig()" placeholder="Morning briefing"/></div></div>
+<div class="arm-zone"><label aria-label="Arm or disarm alarm" class="arm-switch"><input id="alarmArmedToggle" onchange="setAlarmArmed(this.checked)" type="checkbox"/><span class="arm-track"></span><span class="arm-knob"></span></label><div class="alarm-capability">Browser alarm runs while this page is active. Locked-screen/background delivery requires native calendar notifications or a later PWA push service.</div><button class="btn danger" onclick="stopAlarm()" type="button">STOP SOUND</button></div>
+</div></div>
+</section><section class="module span-8" data-label="System Status" data-module="system">
+<div class="module-head"><div class="module-title">System Status</div><div class="module-id">OPS // LIVE</div></div>
+<div class="module-body">
+<div class="metric-grid">
+<div class="metric"><div class="metric-label">System</div><div class="metric-value cyan">ONLINE</div><div class="metric-sub">LOCAL MODE READY</div></div>
+<div class="metric"><div class="metric-label">Calendar</div><div class="metric-value" id="calendarStatus">LOCAL</div><div class="metric-sub">LOCAL + GOOGLE READY</div></div>
+<div class="metric"><div class="metric-label">Tasks</div><div class="metric-value" id="taskCount">0</div><div class="metric-sub">OPEN ITEMS</div></div>
+<div class="metric"><div class="metric-label">Portfolio</div><div class="metric-value" id="portfolioStatus">MANUAL</div><div class="metric-sub">MARKET DATA</div></div>
+</div>
+</div>
+</section><section class="module span-6" data-label="Tasks / Operations" data-module="tasks">
+<div class="module-head"><div class="module-title">Tasks / Operations</div><div class="module-id">03 / 12</div></div>
+<div class="module-body">
+<div class="task-list" id="taskList"></div>
+<div class="form-actions"><button class="btn primary" onclick="openTaskModal()">+ ADD TASK</button><button class="btn" onclick="connectGoogleTasks()">CONNECT GOOGLE TASKS</button></div>
+</div>
+</section><section class="module span-6" data-label="Shift / Roster" data-module="shift">
+<div class="module-head"><div class="module-title">Shift / Roster</div><div class="module-id">04 / 12</div></div>
+<div class="module-body">
+<div class="metric"><div class="metric-label">Current Status</div><div class="metric-value" id="shiftStatus">ON DUTY</div><div class="metric-sub" id="shiftMeta">2 ON / 2 OFF</div></div>
+<div class="form-actions">
+<button class="btn primary" onclick="cycleShift()">CHANGE STATUS</button>
+<button class="btn" onclick="toggleShiftOverride()">OVERRIDE</button>
+</div>
+<div class="section-label">Roster</div>
+<div class="risk-list" id="roster"></div>
+</div>
+</section><section class="module span-4" data-label="Goals / Performance" data-module="goals">
+<div class="module-head"><div class="module-title">Goals / Performance</div><div class="module-id">12 / 12</div></div>
+<div class="module-body">
+<div id="goalList"></div>
+<div class="form-actions"><button class="btn primary" onclick="openGoalModal()">+ GOAL</button></div>
+</div>
+</section><section class="module span-8" data-label="Running Log" data-module="running">
+<div class="module-head"><div class="module-title">Running Log</div><div class="module-id">FITNESS // LOG</div></div>
+<div class="module-body">
+<div class="metric-grid">
+<div class="metric"><div class="metric-label">Weekly Distance</div><div class="metric-value" id="runDistance">0.00 km</div></div>
+<div class="metric"><div class="metric-label">Average Pace</div><div class="metric-value" id="runPace">—</div></div>
+<div class="metric"><div class="metric-label">Runs</div><div class="metric-value" id="runCount">0</div></div>
+<div class="metric"><div class="metric-label">Best Pace</div><div class="metric-value" id="runBest">—</div></div>
+</div>
+<div class="form-actions"><button class="btn primary" onclick="openRunModal()">+ RUN</button></div>
+<div class="table-wrap"><table><thead><tr><th>Date</th><th>Distance</th><th>Time</th><th>Pace</th><th>Notes</th></tr></thead><tbody id="runTable"></tbody></table></div>
+</div>
+</section></main><main class="dashboard page-view" data-page="finance" id="page-finance"><section class="module span-4" data-label="Personal Allowance" data-module="allowance">
+<div class="module-head"><div class="module-title">Personal Allowance</div><div class="module-id">09 / 12</div></div>
+<div class="module-body">
+<div class="metric-grid">
+<div class="metric"><div class="metric-label">Monthly</div><div class="metric-value" id="budgetLimit">$0</div></div>
+<div class="metric"><div class="metric-label">Spent</div><div class="metric-value negative" id="budgetSpent">$0</div></div>
+<div class="metric"><div class="metric-label">Remaining</div><div class="metric-value positive" id="budgetRemain">$0</div></div>
+<div class="metric"><div class="metric-label">Utilization</div><div class="metric-value" id="budgetUtil">0%</div></div>
+</div>
+<div class="section-label">Spending</div>
+<div class="chart-box"><canvas id="budgetChart"></canvas></div>
+<div class="form-actions"><button class="btn primary" onclick="openBudgetModal()">UPDATE BUDGET</button><button class="btn" onclick="openSpendModal()">+ SPEND</button></div>
+</div>
+</section><section class="module span-8" data-label="Portfolio Intelligence" data-module="portfolio">
+<div class="module-head"><div class="module-title">Portfolio Intelligence</div><div class="module-id">05 / 12</div></div>
+<div class="module-body">
+<div class="metric-grid">
+<div class="metric"><div class="metric-label">Equity</div><div class="metric-value" id="equityValue">$0.00</div><div class="metric-sub">CURRENT</div></div>
+<div class="metric"><div class="metric-label">Total P&amp;L</div><div class="metric-value" id="pnlValue">$0.00</div><div class="metric-sub" id="pnlPct">0.00%</div></div>
+<div class="metric"><div class="metric-label">Exposure</div><div class="metric-value" id="exposureValue">0.0%</div><div class="metric-sub">OF EQUITY</div></div>
+<div class="metric"><div class="metric-label">Drawdown</div><div class="metric-value" id="drawdownValue">0.0%</div><div class="metric-sub">CURRENT</div></div>
+</div>
+<div class="section-label">Positions</div>
+<div class="table-wrap"><table><thead><tr>
+<th>Ticker</th><th>Dir</th><th>Qty</th><th>Avg</th><th>Price</th><th>Value</th><th>P&amp;L</th><th>P&amp;L %</th><th>Equity %</th><th>Risk</th>
+</tr></thead><tbody id="positionTable"></tbody></table></div>
+<div class="form-actions"><button class="btn primary" onclick="openPositionModal()">+ POSITION</button><button class="btn" onclick="openPortfolioSettings()">PORTFOLIO SETTINGS</button></div>
+</div>
+</section><section class="module span-4" data-label="Risk Controls" data-module="risk">
+<div class="module-head"><div class="module-title">Risk Controls</div><div class="module-id">06 / 12</div></div>
+<div class="module-body" id="riskControls"></div>
+</section><section class="module span-4" data-label="Portfolio Performance" data-module="performance">
+<div class="module-head"><div class="module-title">Portfolio Performance</div><div class="module-id">07 / 12</div></div>
+<div class="module-body">
+<div class="chart-box"><canvas id="equityChart"></canvas></div>
+<div class="form-actions">
+<button class="btn" onclick="setChartRange('1W')">1W</button><button class="btn" onclick="setChartRange('1M')">1M</button><button class="btn" onclick="setChartRange('3M')">3M</button><button class="btn" onclick="setChartRange('ALL')">ALL</button>
+</div>
+</div>
+</section><section class="module span-4" data-label="Portfolio Journal" data-module="journal">
+<div class="module-head"><div class="module-title">Portfolio Journal</div><div class="module-id">08 / 12</div></div>
+<div class="module-body">
+<div class="risk-list" id="journalList"></div>
+<div class="form-actions"><button class="btn" onclick="openJournalModal()">+ JOURNAL ENTRY</button></div>
+</div>
+</section><section class="module span-8" data-label="Weekly Portfolio Intelligence" data-module="review">
+<div class="module-head"><div class="module-title">Weekly Portfolio Intelligence</div><div class="module-id">10 / 12</div></div>
+<div class="module-body">
+<div class="ai-report">
+<div class="score"><span class="metric-label">Overall</span><b id="aiOverall">—</b></div>
+<div class="score"><span class="metric-label">Performance</span><b id="aiPerf">—</b></div>
+<div class="score"><span class="metric-label">Risk</span><b id="aiRisk">—</b></div>
+<div class="score"><span class="metric-label">Discipline</span><b id="aiDisc">—</b></div>
+</div>
+<div id="aiReport"><div class="empty">No weekly review generated yet. Add portfolio activity during the week, then generate a review.</div></div>
+<div class="form-actions"><button class="btn ai" onclick="generateWeeklyReview()">GENERATE REVIEW</button><button class="btn" onclick="connectGemini()">CONNECT GEMINI BACKEND</button></div>
+</div>
+</section><section class="module span-4" data-label="Intelligence Feed" data-module="intel">
+<div class="module-head"><div class="module-title">Intelligence Feed</div><div class="module-id">11 / 12</div></div>
+<div class="module-body">
+<div class="toolbar" style="margin:0 0 10px"><button class="btn" onclick="filterNews('ALL')">ALL</button><button class="btn" onclick="filterNews('MARKETS')">MARKETS</button><button class="btn" onclick="filterNews('SECURITY')">SECURITY</button><button class="btn" onclick="connectTelegram()">CONNECT TELEGRAM</button></div>
+<div class="news-list" id="newsList"></div>
+</div>
+</section></main><main class="dashboard page-view" data-page="media" id="page-media"><section class="module span-12" data-label="Media Intelligence" data-module="spotify"><div class="module-head"><div class="module-title">Media Intelligence</div><div class="module-id">SPOTIFY // READY</div></div><div class="module-body"><div class="media-now"><div class="album-art" id="spotifyArt">SP</div><div><div class="eyebrow">SPOTIFY CONNECT</div><div id="spotifyTrack" style="font-size:24px;font-weight:700;margin-top:5px">Not connected</div><div class="subbrand" id="spotifyArtist">Connect Spotify through the secure backend to load playback.</div><div class="media-progress"><i id="spotifyProgress"></i></div><div class="media-controls"><button class="btn" disabled="" title="Connect Spotify first">◀</button><button class="btn primary" onclick="connectSpotify()">CONNECT SPOTIFY</button><button class="btn" disabled="" title="Connect Spotify first">▶</button></div></div></div></div></section></main></div>
+<section aria-label="Customize" class="customize-view" id="customizeView">
+<section class="module customize-main"><div class="module-head"><div class="module-title">Customize Workspace</div><div class="module-id">LAYOUT // IDENTITY // TYPE</div></div><div class="module-body">
+<div class="custom-section"><div class="section-label">Identity</div><div class="grid2"><div class="field"><label>Website name</label><input id="identityBrand" maxlength="48" oninput="updateIdentityFromUI()"/></div><div class="field"><label>Browser tab title</label><input id="identityTitle" maxlength="64" oninput="updateIdentityFromUI()"/></div><div class="field"><label>Eyebrow</label><input id="identityEyebrow" maxlength="72" oninput="updateIdentityFromUI()"/></div><div class="field"><label>Subtitle</label><input id="identitySubtitle" maxlength="100" oninput="updateIdentityFromUI()"/></div></div></div>
+<div class="custom-section"><div class="section-label">Pages</div><div class="grid2"><div class="field"><label>Operations page name</label><input id="pageNameOperations" maxlength="20" oninput="updatePageNames()"/></div><div class="field"><label>Finance page name</label><input id="pageNameFinance" maxlength="20" oninput="updatePageNames()"/></div><div class="field"><label>Media page name</label><input id="pageNameMedia" maxlength="20" oninput="updatePageNames()"/></div><div class="field"><label>Default landing page</label><select id="defaultPageSelect" onchange="setDefaultPage(this.value)"><option value="operations">Operations</option><option value="finance">Finance</option><option value="media">Media</option></select></div></div></div>
+<div class="custom-section"><div class="section-label">Module Layout</div><div class="workspace-note">Change a module's page, width or order here. Normal dashboard pages stay locked so calendar events and controls cannot accidentally rearrange the interface.</div><div class="custom-module-list" id="moduleCustomizer" style="margin-top:10px"></div></div>
+<div class="custom-section"><div class="section-label">Typography</div><div class="grid2"><div class="field"><label>Interface font</label><select id="uiFontSelect" onchange="updateTypography()"><option>Inter</option><option>DM Sans</option><option>Manrope</option><option>IBM Plex Mono</option><option>JetBrains Mono</option><option>Space Mono</option><option>Roboto Mono</option></select></div><div class="field"><label>Data / brokerage font</label><select id="dataFontSelect" onchange="updateTypography()"><option>IBM Plex Mono</option><option>JetBrains Mono</option><option>Roboto Mono</option><option>Space Mono</option><option>Inter</option></select></div></div><div class="form-actions"><button class="btn" onclick="applyTypographyPreset('institutional')">INSTITUTIONAL</button><button class="btn" onclick="applyTypographyPreset('terminal')">TRADING TERMINAL</button><button class="btn" onclick="applyTypographyPreset('fintech')">FINTECH</button></div></div>
+<div class="custom-section"><div class="section-label">Appearance</div><div class="preset-grid" id="themePresets"></div><div class="lab-grid" style="margin-top:12px"><div class="slider-row"><div class="slider-top"><span>Primary Hue</span><span class="slider-value" id="primaryHueVal">188°</span></div><input id="primaryHue" max="360" min="0" oninput="updateDesignControl('primaryHue',this.value)" type="range"/></div><div class="slider-row"><div class="slider-top"><span>Secondary Hue</span><span class="slider-value" id="secondaryHueVal">312°</span></div><input id="secondaryHue" max="360" min="0" oninput="updateDesignControl('secondaryHue',this.value)" type="range"/></div><div class="slider-row"><div class="slider-top"><span>Saturation</span><span class="slider-value" id="saturationVal">92%</span></div><input id="saturation" max="100" min="20" oninput="updateDesignControl('saturation',this.value)" type="range"/></div><div class="slider-row"><div class="slider-top"><span>Accent Brightness</span><span class="slider-value" id="brightnessVal">52%</span></div><input id="brightness" max="75" min="30" oninput="updateDesignControl('brightness',this.value)" type="range"/></div><div class="slider-row"><div class="slider-top"><span>Background Hue</span><span class="slider-value" id="backgroundHueVal">258°</span></div><input id="backgroundHue" max="360" min="0" oninput="updateDesignControl('backgroundHue',this.value)" type="range"/></div><div class="slider-row"><div class="slider-top"><span>Panel Opacity</span><span class="slider-value" id="panelAlphaVal">96%</span></div><input id="panelAlpha" max="100" min="70" oninput="updateDesignControl('panelAlpha',this.value)" type="range"/></div><div class="slider-row"><div class="slider-top"><span>Glow Intensity</span><span class="slider-value" id="glowVal">18%</span></div><input id="glow" max="100" min="0" oninput="updateDesignControl('glow',this.value)" type="range"/></div><div class="slider-row"><div class="slider-top"><span>Corner Radius</span><span class="slider-value" id="radiusVal">12px</span></div><input id="radius" max="28" min="0" oninput="updateDesignControl('radius',this.value)" type="range"/></div><div class="slider-row"><div class="slider-top"><span>Interface Density</span><span class="slider-value" id="densityVal">100%</span></div><input id="density" max="108" min="88" oninput="updateDesignControl('density',this.value)" type="range"/></div></div></div>
+<div class="form-actions"><button class="btn primary" onclick="saveCustomization()">SAVE CUSTOMIZATION</button><button class="btn" onclick="exportData()">EXPORT CONFIG + DATA</button><button class="btn danger" onclick="resetWorkspaceLayout()">RESET LAYOUT</button></div>
+</div></section>
+<section class="module customize-side"><div class="module-head"><div class="module-title">Live Identity Preview</div><div class="module-id">REAL-TIME</div></div><div class="module-body"><div class="identity-preview"><div class="eyebrow" id="customPreviewEyebrow">TACTICAL OPERATIONS</div><div id="customPreviewBrand" style="font-size:28px;font-weight:700;margin:7px 0">NEON OPERATIONS CENTER</div><div class="subbrand" id="customPreviewSubtitle">Private operational terminal</div><div class="preview-accent" style="margin-top:16px"></div><div class="metric-grid" style="grid-template-columns:1fr 1fr"><div class="metric"><div class="metric-label">Workspace</div><div class="metric-value cyan">READY</div></div><div class="metric"><div class="metric-label">Layout</div><div class="metric-value">MODULAR</div></div></div></div><div class="workspace-note" style="margin-top:12px">Website name, browser title, fonts, page names, module placement and visual theme are stored with your local Neon Ops state and included in exported backups.</div></div></section>
 </section>
-
-<section class="module span-8">
-  <div class="module-head"><div class="module-title">System Status</div><div class="module-id">OPS // LIVE</div></div>
-  <div class="module-body">
-    <div class="metric-grid">
-      <div class="metric"><div class="metric-label">System</div><div class="metric-value cyan">ONLINE</div><div class="metric-sub">LOCAL MODE READY</div></div>
-      <div class="metric"><div class="metric-label">Calendar</div><div class="metric-value" id="calendarStatus">LOCAL</div><div class="metric-sub">LOCAL + GOOGLE READY</div></div>
-      <div class="metric"><div class="metric-label">Tasks</div><div class="metric-value" id="taskCount">0</div><div class="metric-sub">OPEN ITEMS</div></div>
-      <div class="metric"><div class="metric-label">Portfolio</div><div class="metric-value" id="portfolioStatus">MANUAL</div><div class="metric-sub">MARKET DATA</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="module span-8">
-  <div class="module-head"><div class="module-title">Weekly Operational Calendar</div><div class="module-id">02 / 12</div></div>
-  <div class="module-body">
-    <div class="calendar-toolbar">
-      <button class="btn" onclick="shiftWeek(-1)">← PREVIOUS</button>
-      <strong id="weekLabel">CURRENT WEEK</strong>
-      <button class="btn" onclick="shiftWeek(1)">NEXT →</button>
-      <button class="btn primary" onclick="goToday()">TODAY</button>
-    </div>
-    <div class="calendar-shell"><div class="calendar" id="calendar"></div></div>
-  </div>
-</section>
-
-<section class="module span-4">
-  <div class="module-head"><div class="module-title">Tasks / Operations</div><div class="module-id">03 / 12</div></div>
-  <div class="module-body">
-    <div class="task-list" id="taskList"></div>
-    <div class="form-actions"><button class="btn primary" onclick="openTaskModal()">+ ADD TASK</button><button class="btn" onclick="connectGoogleTasks()">CONNECT GOOGLE TASKS</button></div>
-  </div>
-</section>
-
-<section class="module span-4">
-  <div class="module-head"><div class="module-title">Shift / Roster</div><div class="module-id">04 / 12</div></div>
-  <div class="module-body">
-    <div class="metric"><div class="metric-label">Current Status</div><div class="metric-value" id="shiftStatus">ON DUTY</div><div class="metric-sub" id="shiftMeta">2 ON / 2 OFF</div></div>
-    <div class="form-actions">
-      <button class="btn primary" onclick="cycleShift()">CHANGE STATUS</button>
-      <button class="btn" onclick="toggleShiftOverride()">OVERRIDE</button>
-    </div>
-    <div class="section-label">Roster</div>
-    <div id="roster" class="risk-list"></div>
-  </div>
-</section>
-
-<section class="module span-8">
-  <div class="module-head"><div class="module-title">Portfolio Intelligence</div><div class="module-id">05 / 12</div></div>
-  <div class="module-body">
-    <div class="metric-grid">
-      <div class="metric"><div class="metric-label">Equity</div><div class="metric-value" id="equityValue">$0.00</div><div class="metric-sub">CURRENT</div></div>
-      <div class="metric"><div class="metric-label">Total P&L</div><div class="metric-value" id="pnlValue">$0.00</div><div class="metric-sub" id="pnlPct">0.00%</div></div>
-      <div class="metric"><div class="metric-label">Exposure</div><div class="metric-value" id="exposureValue">0.0%</div><div class="metric-sub">OF EQUITY</div></div>
-      <div class="metric"><div class="metric-label">Drawdown</div><div class="metric-value" id="drawdownValue">0.0%</div><div class="metric-sub">CURRENT</div></div>
-    </div>
-    <div class="section-label">Positions</div>
-    <div class="table-wrap"><table><thead><tr>
-      <th>Ticker</th><th>Dir</th><th>Qty</th><th>Avg</th><th>Price</th><th>Value</th><th>P&L</th><th>P&L %</th><th>Equity %</th><th>Risk</th>
-    </tr></thead><tbody id="positionTable"></tbody></table></div>
-    <div class="form-actions"><button class="btn primary" onclick="openPositionModal()">+ POSITION</button><button class="btn" onclick="openPortfolioSettings()">PORTFOLIO SETTINGS</button></div>
-  </div>
-</section>
-
-<section class="module span-4">
-  <div class="module-head"><div class="module-title">Risk Controls</div><div class="module-id">06 / 12</div></div>
-  <div class="module-body" id="riskControls"></div>
-</section>
-
-<section class="module span-4">
-  <div class="module-head"><div class="module-title">Portfolio Performance</div><div class="module-id">07 / 12</div></div>
-  <div class="module-body">
-    <div class="chart-box"><canvas id="equityChart"></canvas></div>
-    <div class="form-actions">
-      <button class="btn" onclick="setChartRange('1W')">1W</button><button class="btn" onclick="setChartRange('1M')">1M</button><button class="btn" onclick="setChartRange('3M')">3M</button><button class="btn" onclick="setChartRange('ALL')">ALL</button>
-    </div>
-  </div>
-</section>
-
-<section class="module span-4">
-  <div class="module-head"><div class="module-title">Portfolio Journal</div><div class="module-id">08 / 12</div></div>
-  <div class="module-body">
-    <div id="journalList" class="risk-list"></div>
-    <div class="form-actions"><button class="btn" onclick="openJournalModal()">+ JOURNAL ENTRY</button></div>
-  </div>
-</section>
-
-<section class="module span-4">
-  <div class="module-head"><div class="module-title">Personal Allowance</div><div class="module-id">09 / 12</div></div>
-  <div class="module-body">
-    <div class="metric-grid">
-      <div class="metric"><div class="metric-label">Monthly</div><div class="metric-value" id="budgetLimit">$0</div></div>
-      <div class="metric"><div class="metric-label">Spent</div><div class="metric-value negative" id="budgetSpent">$0</div></div>
-      <div class="metric"><div class="metric-label">Remaining</div><div class="metric-value positive" id="budgetRemain">$0</div></div>
-      <div class="metric"><div class="metric-label">Utilization</div><div class="metric-value" id="budgetUtil">0%</div></div>
-    </div>
-    <div class="section-label">Spending</div>
-    <div class="chart-box"><canvas id="budgetChart"></canvas></div>
-    <div class="form-actions"><button class="btn primary" onclick="openBudgetModal()">UPDATE BUDGET</button><button class="btn" onclick="openSpendModal()">+ SPEND</button></div>
-  </div>
-</section>
-
-<section class="module span-8">
-  <div class="module-head"><div class="module-title">Weekly Portfolio Intelligence</div><div class="module-id">10 / 12</div></div>
-  <div class="module-body">
-    <div class="ai-report">
-      <div class="score"><span class="metric-label">Overall</span><b id="aiOverall">—</b></div>
-      <div class="score"><span class="metric-label">Performance</span><b id="aiPerf">—</b></div>
-      <div class="score"><span class="metric-label">Risk</span><b id="aiRisk">—</b></div>
-      <div class="score"><span class="metric-label">Discipline</span><b id="aiDisc">—</b></div>
-    </div>
-    <div id="aiReport"><div class="empty">No weekly review generated yet. Add portfolio activity during the week, then generate a review.</div></div>
-    <div class="form-actions"><button class="btn ai" onclick="generateWeeklyReview()">GENERATE REVIEW</button><button class="btn" onclick="connectGemini()">CONNECT GEMINI BACKEND</button></div>
-  </div>
-</section>
-
-<section class="module span-4">
-  <div class="module-head"><div class="module-title">Intelligence Feed</div><div class="module-id">11 / 12</div></div>
-  <div class="module-body">
-    <div class="toolbar" style="margin:0 0 10px"><button class="btn" onclick="filterNews('ALL')">ALL</button><button class="btn" onclick="filterNews('MARKETS')">MARKETS</button><button class="btn" onclick="filterNews('SECURITY')">SECURITY</button><button class="btn" onclick="connectTelegram()">CONNECT TELEGRAM</button></div>
-    <div id="newsList" class="news-list"></div>
-  </div>
-</section>
-
-<section class="module span-4">
-  <div class="module-head"><div class="module-title">Goals / Performance</div><div class="module-id">12 / 12</div></div>
-  <div class="module-body">
-    <div id="goalList"></div>
-    <div class="form-actions"><button class="btn primary" onclick="openGoalModal()">+ GOAL</button></div>
-  </div>
-</section>
-
-<section class="module span-8">
-  <div class="module-head"><div class="module-title">Running Log</div><div class="module-id">FITNESS // LOG</div></div>
-  <div class="module-body">
-    <div class="metric-grid">
-      <div class="metric"><div class="metric-label">Weekly Distance</div><div class="metric-value" id="runDistance">0.00 km</div></div>
-      <div class="metric"><div class="metric-label">Average Pace</div><div class="metric-value" id="runPace">—</div></div>
-      <div class="metric"><div class="metric-label">Runs</div><div class="metric-value" id="runCount">0</div></div>
-      <div class="metric"><div class="metric-label">Best Pace</div><div class="metric-value" id="runBest">—</div></div>
-    </div>
-    <div class="form-actions"><button class="btn primary" onclick="openRunModal()">+ RUN</button></div>
-    <div class="table-wrap"><table><thead><tr><th>Date</th><th>Distance</th><th>Time</th><th>Pace</th><th>Notes</th></tr></thead><tbody id="runTable"></tbody></table></div>
-  </div>
-</section>
-</main>
-
-<section class="design-lab" id="designLab" aria-label="Design Lab">
-  <section class="module lab-controls">
-    <div class="module-head"><div class="module-title">Design Lab</div><div class="module-id">UI // CUSTOMIZER</div></div>
-    <div class="module-body">
-      <div class="section-label">Preset Systems</div>
-      <div class="preset-grid" id="themePresets"></div>
-      <div class="section-label">Live Color Engine</div>
-      <div class="lab-grid">
-        <div class="slider-row"><div class="slider-top"><span>Primary Hue</span><span class="slider-value" id="primaryHueVal">188°</span></div><input id="primaryHue" type="range" min="0" max="360" step="1" oninput="updateDesignControl('primaryHue',this.value)"></div>
-        <div class="slider-row"><div class="slider-top"><span>Secondary Hue</span><span class="slider-value" id="secondaryHueVal">312°</span></div><input id="secondaryHue" type="range" min="0" max="360" step="1" oninput="updateDesignControl('secondaryHue',this.value)"></div>
-        <div class="slider-row"><div class="slider-top"><span>Saturation</span><span class="slider-value" id="saturationVal">92%</span></div><input id="saturation" type="range" min="20" max="100" step="1" oninput="updateDesignControl('saturation',this.value)"></div>
-        <div class="slider-row"><div class="slider-top"><span>Accent Brightness</span><span class="slider-value" id="brightnessVal">52%</span></div><input id="brightness" type="range" min="30" max="75" step="1" oninput="updateDesignControl('brightness',this.value)"></div>
-        <div class="slider-row"><div class="slider-top"><span>Background Hue</span><span class="slider-value" id="backgroundHueVal">258°</span></div><input id="backgroundHue" type="range" min="0" max="360" step="1" oninput="updateDesignControl('backgroundHue',this.value)"></div>
-        <div class="slider-row"><div class="slider-top"><span>Panel Opacity</span><span class="slider-value" id="panelAlphaVal">96%</span></div><input id="panelAlpha" type="range" min="70" max="100" step="1" oninput="updateDesignControl('panelAlpha',this.value)"></div>
-        <div class="slider-row"><div class="slider-top"><span>Glow Intensity</span><span class="slider-value" id="glowVal">18%</span></div><input id="glow" type="range" min="0" max="100" step="1" oninput="updateDesignControl('glow',this.value)"></div>
-        <div class="slider-row"><div class="slider-top"><span>Corner Radius</span><span class="slider-value" id="radiusVal">12px</span></div><input id="radius" type="range" min="0" max="28" step="1" oninput="updateDesignControl('radius',this.value)"></div>
-        <div class="slider-row"><div class="slider-top"><span>Interface Density</span><span class="slider-value" id="densityVal">100%</span></div><input id="density" type="range" min="88" max="108" step="1" oninput="updateDesignControl('density',this.value)"></div>
-      </div>
-      <div class="lab-note">Changes preview live and persist on this device. Theme settings are included in exported backups.</div>
-      <div class="form-actions"><button class="btn primary" onclick="saveDesignSettings()">SAVE DESIGN</button><button class="btn" onclick="randomizeTheme()">RANDOMIZE</button><button class="btn" onclick="resetDesign()">RESET</button><button class="btn" onclick="closeDesignLab()">← DASHBOARD</button></div>
-    </div>
-  </section>
-  <section class="module lab-preview">
-    <div class="module-head"><div class="module-title">Live Preview</div><div class="module-id">REAL-TIME</div></div>
-    <div class="module-body">
-      <div class="preview-shell">
-        <div class="preview-top"><span>NEON OPS // ACTIVE</span><span>DESIGN SYNC</span></div>
-        <div class="preview-card"><div class="preview-accent"></div><div class="eyebrow">PRIMARY SYSTEM</div><div class="preview-value">ONLINE</div><div class="subbrand">Tactical interface with persistent personal styling.</div><div class="preview-row"><div class="preview-chip">CALENDAR // READY</div><div class="preview-chip">TASKS // READY</div></div><div class="form-actions"><button class="btn primary">PRIMARY ACTION</button><button class="btn">SECONDARY</button></div></div>
-      </div>
-    </div>
-  </section>
-</section>
-
 <footer class="footer">
-  <span>NEON OPERATIONS CENTER // LOCAL-FIRST</span>
-  <span id="saveStatus">STATE SAVED</span>
-  <span>NO API CREDENTIALS STORED IN CLIENT</span>
+<span id="footerBrand">NEON OPERATIONS CENTER // LOCAL-FIRST</span>
+<span id="saveStatus">STATE SAVED</span>
+<span>NO API CREDENTIALS STORED IN CLIENT</span>
 </footer>
 </div>
-
 <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal(event)">
- <div class="modal" onclick="event.stopPropagation()">
-  <div class="modal-head"><h3 id="modalTitle">—</h3><button class="icon-btn" onclick="closeModal()">✕</button></div>
-  <div class="modal-body" id="modalBody"></div>
- </div>
+<div class="modal" onclick="event.stopPropagation()">
+<div class="modal-head"><h3 id="modalTitle">—</h3><button class="icon-btn" onclick="closeModal()">✕</button></div>
+<div class="modal-body" id="modalBody"></div>
+</div>
 </div>
 <div class="toast" id="toast"></div>
-
 <script>
 "use strict";
 
@@ -423,8 +391,8 @@ const pct=n=>(Number(n)||0).toFixed(2)+"%";
 const clamp=(n,a,b)=>Math.min(Math.max(n,a),b);
 
 const defaultState={
- settings:{weekOffset:0,chartRange:"ALL",design:{primaryHue:188,secondaryHue:312,saturation:92,brightness:52,backgroundHue:258,panelAlpha:96,glow:18,radius:12,density:100,preset:"Neon Cyan"}},
- alarm:{time:"",armed:false},
+ settings:{weekOffset:0,chartRange:"ALL",design:{primaryHue:188,secondaryHue:312,saturation:92,brightness:52,backgroundHue:258,panelAlpha:96,glow:18,radius:12,density:100,preset:"Neon Cyan"},identity:{brand:"NEON OPERATIONS CENTER",browserTitle:"Neon Operations Center",eyebrow:"TACTICAL OPERATIONS // FINANCIAL INTELLIGENCE",subtitle:"Private operational terminal — local-first, integration-ready"},typography:{ui:"Inter",data:"IBM Plex Mono"},workspace:{defaultPage:"operations",activePage:"operations",pageNames:{operations:"OPS",finance:"FINANCE",media:"MEDIA"},modules:{calendar:{page:"operations",order:0,span:12,hidden:false},alarm:{page:"operations",order:1,span:4,hidden:false},system:{page:"operations",order:2,span:8,hidden:false},tasks:{page:"operations",order:3,span:6,hidden:false},shift:{page:"operations",order:4,span:6,hidden:false},goals:{page:"operations",order:5,span:4,hidden:false},running:{page:"operations",order:6,span:8,hidden:false},allowance:{page:"finance",order:0,span:4,hidden:false},portfolio:{page:"finance",order:1,span:8,hidden:false},risk:{page:"finance",order:2,span:4,hidden:false},performance:{page:"finance",order:3,span:4,hidden:false},journal:{page:"finance",order:4,span:4,hidden:false},review:{page:"finance",order:5,span:8,hidden:false},intel:{page:"finance",order:6,span:4,hidden:false},spotify:{page:"media",order:0,span:12,hidden:false}}}},
+ alarm:{time:"",armed:false,label:"",lastFired:""},
  calendar:[],
  tasks:[
   {id:uid(),title:"Review daily priorities",category:"DAILY TASKS",priority:"HIGH",due:todayISO(),done:false},
@@ -497,43 +465,44 @@ function updateClock(){
  document.getElementById("topTime").textContent=time;
  document.getElementById("mainTime").textContent=time;
  document.getElementById("topDate").textContent=date;
- if(state.alarm.armed && state.alarm.time && time.startsWith(state.alarm.time)) triggerAlarm();
+ const hm=String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"),fireKey=localDateKey(d)+"T"+hm;
+ if(state.alarm.armed&&state.alarm.time===hm&&state.alarm.lastFired!==fireKey){state.alarm.lastFired=fireKey;saveState();triggerAlarm()}
+ updateAlarmCountdown(d);
 }
 setInterval(updateClock,1000);
 
 /* ALARM */
-function armAlarm(){
- const v=document.getElementById("alarmInput").value;
- if(!v){toast("Set an alarm time first");return}
- state.alarm={time:v,armed:true};saveState();renderAlarm();toast("Alarm armed");
+function updateAlarmConfig(){
+ const time=document.getElementById("alarmInput")?.value||"",label=document.getElementById("alarmLabel")?.value||"";
+ state.alarm.time=time;state.alarm.label=label;saveState();renderAlarm();
 }
-function disarmAlarm(){state.alarm.armed=false;saveState();renderAlarm();stopAlarm()}
+function setAlarmArmed(on){
+ const input=document.getElementById("alarmInput"),v=input?.value||state.alarm.time;
+ if(on&&!v){const t=document.getElementById("alarmArmedToggle");if(t)t.checked=false;toast("Set an alarm time first");return}
+ state.alarm.time=v;state.alarm.label=document.getElementById("alarmLabel")?.value||state.alarm.label||"";state.alarm.armed=!!on;state.alarm.lastFired="";saveState();renderAlarm();if(!on)stopAlarm();toast(on?"Alarm armed":"Alarm disarmed")
+}
+function armAlarm(){setAlarmArmed(true)}
+function disarmAlarm(){setAlarmArmed(false)}
 function renderAlarm(){
- document.getElementById("alarmInput").value=state.alarm.time||"";
- document.getElementById("alarmState").textContent=state.alarm.armed?"ALARM ARMED // "+state.alarm.time:"ALARM DISARMED";
+ const input=document.getElementById("alarmInput"),label=document.getElementById("alarmLabel"),toggle=document.getElementById("alarmArmedToggle");
+ if(input){input.value=state.alarm.time||"";input.onchange=updateAlarmConfig}
+ if(label)label.value=state.alarm.label||"";
+ if(toggle)toggle.checked=!!state.alarm.armed;
+ const status=document.getElementById("alarmState");if(status)status.textContent=state.alarm.armed?"ALARM ARMED // "+state.alarm.time:"ALARM DISARMED";
+ const ld=document.getElementById("alarmLabelDisplay");if(ld)ld.textContent=state.alarm.label||"NO LABEL";
+ updateAlarmCountdown(new Date());
+}
+function updateAlarmCountdown(now=new Date()){
+ const out=document.getElementById("nextAlarm");if(!out)return;
+ if(!state.alarm.armed||!state.alarm.time){out.textContent="NO ALARM SET";return}
+ const [h,m]=state.alarm.time.split(":").map(Number),next=new Date(now);next.setHours(h,m,0,0);if(next<=now)next.setDate(next.getDate()+1);
+ const mins=Math.max(0,Math.round((next-now)/60000)),hh=Math.floor(mins/60),mm=mins%60;out.textContent="NEXT // "+String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+" // "+String(hh).padStart(2,"0")+"H "+String(mm).padStart(2,"0")+"M";
 }
 function triggerAlarm(){
- if(alarmInterval)return;
- document.getElementById("alarmBanner").classList.add("show");
- document.getElementById("alarmModule").classList.add("alarm-active");
- try{
-  alarmAudio=new (window.AudioContext||window.webkitAudioContext)();
-  const beep=()=>{
-   if(!alarmAudio)return;
-   const o=alarmAudio.createOscillator(),g=alarmAudio.createGain();
-   o.frequency.value=880;g.gain.value=.045;o.connect(g);g.connect(alarmAudio.destination);o.start();
-   setTimeout(()=>o.stop(),180);
-  };
-  beep();alarmInterval=setInterval(beep,700);
- }catch(e){}
+ if(alarmInterval)return;document.getElementById("alarmBanner").classList.add("show");document.getElementById("alarmModule")?.classList.add("alarm-active");
+ try{alarmAudio=new (window.AudioContext||window.webkitAudioContext)();const beep=()=>{if(!alarmAudio)return;const o=alarmAudio.createOscillator(),g=alarmAudio.createGain();o.frequency.value=880;g.gain.value=.05;o.connect(g);g.connect(alarmAudio.destination);o.start();setTimeout(()=>o.stop(),180)};beep();alarmInterval=setInterval(beep,700)}catch(e){}
 }
-function stopAlarm(){
- clearInterval(alarmInterval);alarmInterval=null;
- if(alarmAudio){alarmAudio.close().catch(()=>{});alarmAudio=null}
- document.getElementById("alarmBanner").classList.remove("show");
- document.getElementById("alarmModule").classList.remove("alarm-active");
-}
-
+function stopAlarm(){clearInterval(alarmInterval);alarmInterval=null;if(alarmAudio){alarmAudio.close().catch(()=>{});alarmAudio=null}document.getElementById("alarmBanner").classList.remove("show");document.getElementById("alarmModule")?.classList.remove("alarm-active")}
 
 /* DESIGN LAB */
 const THEME_PRESETS=[
@@ -584,8 +553,8 @@ function updateDesignControl(key,value){const d=ensureDesign();d[key]=Number(val
 function saveDesignSettings(){saveState();toast("Design settings saved")}
 function randomizeTheme(){const d=ensureDesign();d.primaryHue=Math.floor(Math.random()*361);d.secondaryHue=(d.primaryHue+90+Math.floor(Math.random()*181))%360;d.backgroundHue=(d.primaryHue+30)%360;d.saturation=70+Math.floor(Math.random()*31);d.brightness=48+Math.floor(Math.random()*15);d.glow=10+Math.floor(Math.random()*31);d.radius=6+Math.floor(Math.random()*13);d.preset="Custom";applyDesign();toast("Theme randomized")}
 function resetDesign(){state.settings.design={...defaultState.settings.design};applyDesign();saveState();toast("Design reset")}
-function openDesignLab(){document.querySelector("main.dashboard").classList.add("view-hidden");document.getElementById("designLab").classList.add("active");document.getElementById("designLabBtn")?.classList.add("tab-active");renderThemePresets();window.scrollTo({top:0,behavior:"smooth"});location.hash="design-lab"}
-function closeDesignLab(){document.querySelector("main.dashboard").classList.remove("view-hidden");document.getElementById("designLab").classList.remove("active");document.getElementById("designLabBtn")?.classList.remove("tab-active");if(location.hash==="#design-lab")history.replaceState(null,"",location.pathname+location.search);window.scrollTo({top:0,behavior:"smooth"})}
+function openDesignLab(){showPage("customize")}
+function closeDesignLab(){showPage(state.settings.workspace.defaultPage||"operations")}
 
 /* CALENDAR */
 function mondayOf(d){
@@ -620,32 +589,19 @@ function renderCalendar(){
  }
 }
 function renderEvent(col,ev,weekStart){
- const s=new Date(ev.start),e=new Date(ev.end);
- const mins=s.getHours()*60+s.getMinutes(),duration=Math.max(15,(e-s)/60000);
- const el=document.createElement("div");el.className="event";el.dataset.id=ev.id;el.dataset.cat=ev.category||"OTHER";
- el.style.top=(mins)+"px";el.style.height=Math.max(24,duration)+"px";
- el.innerHTML="<strong>"+esc(ev.title)+"</strong><small>"+s.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})+" — "+e.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})+"</small><span class=\"resize\"></span>";
- el.addEventListener("pointerdown",e=>startEventDrag(e,ev,el,col));
- el.addEventListener("dblclick",()=>openEventModal(ev.id));
- col.appendChild(el);
+ const s=new Date(ev.start),e=new Date(ev.end),mins=s.getHours()*60+s.getMinutes(),duration=Math.max(15,(e-s)/60000);
+ const el=document.createElement("div");el.className="event";el.dataset.id=ev.id;el.dataset.cat=ev.category||"OTHER";el.style.top=mins+"px";el.style.height=Math.max(24,duration)+"px";
+ el.innerHTML="<strong>"+esc(ev.title)+"</strong><small>"+s.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})+" — "+e.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})+"</small><span class=\"event-drag\" title=\"Drag to reschedule\" aria-label=\"Drag event\">↕</span><span class=\"resize\" title=\"Resize duration\"></span>";
+ el.addEventListener("click",x=>{if(x.target.closest(".event-drag,.resize"))return;openEventModal(ev.id)});
+ el.querySelector(".event-drag").addEventListener("pointerdown",x=>startEventDrag(x,ev,el,col));
+ el.querySelector(".resize").addEventListener("pointerdown",x=>startResize(x,ev,el,col));col.appendChild(el);
 }
-function calendarBlankPointer(e,col){
- if(e.target!==col)return;
- const rect=col.getBoundingClientRect(),mins=clamp(Math.round((e.clientY-rect.top)/15)*15,0,1425);
- openEventModal(null,mins,Number(col.dataset.day));
-}
+function calendarBlankPointer(e,col){if(e.target!==col)return;const rect=col.getBoundingClientRect(),mins=clamp(Math.round((e.clientY-rect.top)/15)*15,0,1425);openEventModal(null,mins,Number(col.dataset.day))}
 function startEventDrag(e,ev,el,col){
- if(e.target.classList.contains("resize")){startResize(e,ev,el,col);return}
- e.preventDefault();el.setPointerCapture?.(e.pointerId);
- dragState={type:"move",ev,el,col,startY:e.clientY,startX:e.clientX,origTop:parseFloat(el.style.top)};
- const move=x=>{
-  const dy=x.clientY-dragState.startY,dx=x.clientX-dragState.startX;
-  const newTop=clamp(Math.round((dragState.origTop+dy)/15)*15,0,1425);
-  el.style.top=newTop+"px";
-  if(Math.abs(dx)>45){const cols=[...document.querySelectorAll(".day-col")];const idx=cols.indexOf(col);const shift=dx>0?1:-1;const target=cols[clamp(idx+shift,0,6)];if(target!==col){target.appendChild(el);dragState.col=target;dragState.startX=x.clientX;}}
- }
- const up=()=>{document.removeEventListener("pointermove",move);document.removeEventListener("pointerup",up);const mins=parseFloat(el.style.top);const old=new Date(ev.start);const targetDay=Number(dragState.col.dataset.day);const ws=currentWeekStart();const ns=new Date(ws);ns.setDate(ns.getDate()+targetDay);ns.setHours(Math.floor(mins/60),mins%60,0,0);const dur=new Date(ev.end)-new Date(ev.start);ev.start=ns.toISOString();ev.end=new Date(ns.getTime()+dur).toISOString();saveState();renderCalendar();toast("Event moved")}
- document.addEventListener("pointermove",move);document.addEventListener("pointerup",up);
+ e.preventDefault();e.stopPropagation();el.setPointerCapture?.(e.pointerId);dragState={ev,el,col,startY:e.clientY,origTop:parseFloat(el.style.top)};
+ const move=x=>{const dy=x.clientY-dragState.startY,newTop=clamp(Math.round((dragState.origTop+dy)/15)*15,0,1425);el.style.top=newTop+"px";const cols=[...document.querySelectorAll(".day-col")];const target=cols.find(c=>{const r=c.getBoundingClientRect();return x.clientX>=r.left&&x.clientX<=r.right});if(target&&target!==dragState.col){target.appendChild(el);dragState.col=target}};
+ const up=()=>{document.removeEventListener("pointermove",move);document.removeEventListener("pointerup",up);const mins=parseFloat(el.style.top),targetDay=Number(dragState.col.dataset.day),ws=currentWeekStart(),ns=new Date(ws),dur=new Date(ev.end)-new Date(ev.start);ns.setDate(ns.getDate()+targetDay);ns.setHours(Math.floor(mins/60),mins%60,0,0);ev.start=ns.toISOString();ev.end=new Date(ns.getTime()+dur).toISOString();saveState();renderCalendar();toast("Event moved")};
+ document.addEventListener("pointermove",move);document.addEventListener("pointerup",up,{once:true});
 }
 function startResize(e,ev,el,col){
  e.preventDefault();const startY=e.clientY,orig=parseFloat(el.style.height);
@@ -673,17 +629,18 @@ function openEventModal(id=null,mins=480,day=0){
   <div class="field"><label>Reminder (minutes)</label><input name="reminder" type="number" value="${ev?.reminder??10}"></div>
  </div>
  <div class="field" style="margin-top:10px"><label>Notes</label><textarea name="notes">${esc(ev?.notes||"")}</textarea></div>
- <div class="form-actions"><button class="btn primary" type="submit">SAVE EVENT</button>${ev?`<button class="btn danger" type="button" onclick="deleteEvent('${id}')">DELETE</button>`:""}<button class="btn" type="button" onclick="closeModal()">CANCEL</button></div>
+ <div class="form-actions"><button class="btn primary" type="submit">SAVE EVENT</button>${ev?`<button class="btn" type="button" onclick="duplicateEvent('${id}')">DUPLICATE</button><button class="btn danger" type="button" onclick="deleteEvent('${id}')">DELETE</button>`:""}<button class="btn" type="button" onclick="closeModal()">CANCEL</button></div>
  </form>`);
 }
 function localInput(d){const x=new Date(d.getTime()-d.getTimezoneOffset()*60000);return x.toISOString().slice(0,16)}
 function saveEventForm(e,id){
  e.preventDefault();const f=new FormData(e.target);const data=Object.fromEntries(f);
- const obj={id:id||uid(),title:data.title,category:data.category,start:new Date(data.start).toISOString(),end:new Date(data.end).toISOString(),location:data.location,reminder:Number(data.reminder)||0,notes:data.notes};
+ const start=new Date(data.start),end=new Date(data.end);if(end<=start){toast("End time must be after start time");return}const obj={id:id||uid(),title:data.title,category:data.category,start:start.toISOString(),end:end.toISOString(),location:data.location,reminder:Number(data.reminder)||0,notes:data.notes};
  if(id){const i=state.calendar.findIndex(x=>x.id===id);state.calendar[i]=obj}else state.calendar.push(obj);
  saveState();closeModal();renderCalendar();toast("Event saved");
 }
-function deleteEvent(id){state.calendar=state.calendar.filter(x=>x.id!==id);saveState();closeModal();renderCalendar();toast("Event deleted")}
+function duplicateEvent(id){const src=state.calendar.find(x=>x.id===id);if(!src)return;const copy={...src,id:uid(),title:src.title+" (Copy)"};state.calendar.push(copy);saveState();closeModal();renderCalendar();toast("Event duplicated")}
+function deleteEvent(id){if(!confirm("Delete this calendar event?"))return;state.calendar=state.calendar.filter(x=>x.id!==id);saveState();closeModal();renderCalendar();toast("Event deleted")}
 
 /* TASKS */
 function renderTasks(){
@@ -871,6 +828,30 @@ function openVoiceResult(text){
  openModal("Voice Input",`<div class="empty">Heard:<br><strong style="display:block;margin-top:8px;font-size:18px;color:var(--text)">“${esc(text)}”</strong><br>This static version captures the phrase. A secure AI/parser backend can convert natural language into calendar events or Google Tasks.</div><div class="form-actions"><button class="btn primary" onclick="openEventModal();closeModal()">CREATE EVENT</button><button class="btn" onclick="openTaskModal();closeModal()">CREATE TASK</button></div>`)
 }
 
+
+/* WORKSPACE / CUSTOMIZATION */
+const MODULE_META={calendar:"Weekly Operational Calendar",alarm:"Clock / Alarm",system:"System Status",tasks:"Tasks / Operations",shift:"Shift / Roster",goals:"Goals / Performance",running:"Running Log",allowance:"Personal Allowance",portfolio:"Portfolio Intelligence",risk:"Risk Controls",performance:"Portfolio Performance",journal:"Portfolio Journal",review:"Weekly Portfolio Intelligence",intel:"Intelligence Feed",spotify:"Media Intelligence"};
+function ensureWorkspace(){return state.settings.workspace||(state.settings.workspace=structuredClone(defaultState.settings.workspace))}
+function renderPageNav(){const w=ensureWorkspace(),nav=document.getElementById("pageNav");if(!nav)return;const order=["operations","finance","media"];nav.innerHTML=order.map((p,i)=>`<button class="page-tab ${w.activePage===p?"active":""}" onclick="showPage('${p}')">${String(i+1).padStart(2,"0")} ${esc(w.pageNames[p]||p.toUpperCase())}</button>`).join("")+`<button class="page-tab ${w.activePage==="customize"?"active":""}" onclick="showPage('customize')">CUSTOMIZE</button>`}
+function showPage(page,persist=true){const w=ensureWorkspace(),valid=["operations","finance","media","customize"].includes(page)?page:w.defaultPage||"operations";document.querySelectorAll(".page-view").forEach(x=>x.classList.toggle("active",x.dataset.page===valid));document.getElementById("customizeView")?.classList.toggle("active",valid==="customize");w.activePage=valid;if(persist){saveState();}renderPageNav();if(valid==="customize"){renderCustomizationUI();renderThemePresets();}if(valid==="finance"){requestAnimationFrame(()=>{renderPortfolio();renderBudget();});}if(location.hash!=="#"+valid){history.replaceState(null,"","#"+valid);}window.scrollTo({top:0,behavior:"smooth"});}
+function renderWorkspace(){const w=ensureWorkspace();for(const [id,cfg] of Object.entries(w.modules)){const el=document.querySelector(`[data-module="${id}"]`),target=document.getElementById("page-"+cfg.page);if(!el||!target)continue;el.className=el.className.replace(/span-\d+/g,"").trim()+" span-"+cfg.span;el.style.display=cfg.hidden?"none":"";target.appendChild(el)}for(const p of ["operations","finance","media"]){const target=document.getElementById("page-"+p);if(!target)continue;[...target.querySelectorAll(":scope > [data-module]")].sort((a,b)=>(w.modules[a.dataset.module]?.order??99)-(w.modules[b.dataset.module]?.order??99)).forEach(x=>target.appendChild(x))}}
+function normalizeModuleOrder(page){const w=ensureWorkspace(),ids=Object.keys(w.modules).filter(id=>w.modules[id].page===page).sort((a,b)=>w.modules[a].order-w.modules[b].order);ids.forEach((id,i)=>w.modules[id].order=i)}
+function updateModuleSetting(id,key,value){const w=ensureWorkspace(),cfg=w.modules[id];if(!cfg)return;const oldPage=cfg.page;if(key==="span")value=Number(value);cfg[key]=value;normalizeModuleOrder(oldPage);normalizeModuleOrder(cfg.page);saveState();renderWorkspace();renderWorkspaceCustomizer()}
+function moveModule(id,dir){const w=ensureWorkspace(),cfg=w.modules[id],ids=Object.keys(w.modules).filter(x=>w.modules[x].page===cfg.page).sort((a,b)=>w.modules[a].order-w.modules[b].order),i=ids.indexOf(id),j=clamp(i+dir,0,ids.length-1);if(i===j)return;const other=w.modules[ids[j]];[cfg.order,other.order]=[other.order,cfg.order];saveState();renderWorkspace();renderWorkspaceCustomizer()}
+function toggleModuleHidden(id){const w=ensureWorkspace();w.modules[id].hidden=!w.modules[id].hidden;saveState();renderWorkspace();renderWorkspaceCustomizer()}
+function renderWorkspaceCustomizer(){const host=document.getElementById("moduleCustomizer");if(!host)return;const w=ensureWorkspace(),pages=["operations","finance","media"];host.innerHTML=Object.keys(w.modules).sort((a,b)=>pages.indexOf(w.modules[a].page)-pages.indexOf(w.modules[b].page)||w.modules[a].order-w.modules[b].order).map(id=>{const c=w.modules[id];return `<div class="custom-module-row"><div class="custom-module-name"><b>${esc(MODULE_META[id]||id)}</b><small>${c.hidden?"HIDDEN":"VISIBLE"} // ORDER ${c.order+1}</small></div><select aria-label="Page for ${esc(MODULE_META[id]||id)}" onchange="updateModuleSetting('${id}','page',this.value)">${pages.map(p=>`<option value="${p}" ${c.page===p?"selected":""}>${esc(w.pageNames[p]||p)}</option>`).join("")}</select><select aria-label="Width for ${esc(MODULE_META[id]||id)}" onchange="updateModuleSetting('${id}','span',this.value)">${[4,6,8,12].map(s=>`<option value="${s}" ${c.span===s?"selected":""}>${s===12?"FULL":s+" / 12"}</option>`).join("")}</select><div class="custom-module-actions"><button class="btn" onclick="moveModule('${id}',-1)" title="Move up">↑</button><button class="btn" onclick="moveModule('${id}',1)" title="Move down">↓</button><button class="btn ${c.hidden?"primary":""}" onclick="toggleModuleHidden('${id}')">${c.hidden?"SHOW":"HIDE"}</button></div></div>`}).join("")}
+function updatePageNames(){const w=ensureWorkspace();w.pageNames.operations=document.getElementById("pageNameOperations").value.trim()||"OPS";w.pageNames.finance=document.getElementById("pageNameFinance").value.trim()||"FINANCE";w.pageNames.media=document.getElementById("pageNameMedia").value.trim()||"MEDIA";saveState();renderPageNav();renderWorkspaceCustomizer()}
+function setDefaultPage(v){const w=ensureWorkspace();if(["operations","finance","media"].includes(v)){w.defaultPage=v;saveState()}}
+function applyIdentity(){const i=state.settings.identity||defaultState.settings.identity;document.getElementById("brandName").textContent=i.brand;document.getElementById("brandEyebrow").textContent=i.eyebrow;document.getElementById("brandSubtitle").textContent=i.subtitle;document.title=i.browserTitle||i.brand;const fb=document.getElementById("footerBrand");if(fb)fb.textContent=i.brand+" // LOCAL-FIRST";document.getElementById("customPreviewBrand")&&(document.getElementById("customPreviewBrand").textContent=i.brand);document.getElementById("customPreviewEyebrow")&&(document.getElementById("customPreviewEyebrow").textContent=i.eyebrow);document.getElementById("customPreviewSubtitle")&&(document.getElementById("customPreviewSubtitle").textContent=i.subtitle)}
+function updateIdentityFromUI(){const i=state.settings.identity||(state.settings.identity={...defaultState.settings.identity});i.brand=document.getElementById("identityBrand").value.trim()||"NEON OPS";i.browserTitle=document.getElementById("identityTitle").value.trim()||i.brand;i.eyebrow=document.getElementById("identityEyebrow").value.trim();i.subtitle=document.getElementById("identitySubtitle").value.trim();applyIdentity();saveState()}
+function applyTypography(){const t=state.settings.typography||defaultState.settings.typography;document.documentElement.style.setProperty("--ui-font",`"${t.ui}",system-ui,sans-serif`);document.documentElement.style.setProperty("--data-font",`"${t.data}",monospace`)}
+function updateTypography(){state.settings.typography={ui:document.getElementById("uiFontSelect").value,data:document.getElementById("dataFontSelect").value};applyTypography();saveState()}
+function applyTypographyPreset(p){const presets={institutional:{ui:"Inter",data:"IBM Plex Mono"},terminal:{ui:"IBM Plex Mono",data:"JetBrains Mono"},fintech:{ui:"DM Sans",data:"Roboto Mono"}};state.settings.typography=presets[p]||presets.institutional;applyTypography();renderCustomizationUI();saveState();toast("Typography preset applied")}
+function renderCustomizationUI(){const i=state.settings.identity||defaultState.settings.identity,w=ensureWorkspace(),t=state.settings.typography||defaultState.settings.typography;const set=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v};set("identityBrand",i.brand);set("identityTitle",i.browserTitle);set("identityEyebrow",i.eyebrow);set("identitySubtitle",i.subtitle);set("pageNameOperations",w.pageNames.operations);set("pageNameFinance",w.pageNames.finance);set("pageNameMedia",w.pageNames.media);set("defaultPageSelect",w.defaultPage);set("uiFontSelect",t.ui);set("dataFontSelect",t.data);renderWorkspaceCustomizer();applyIdentity();syncDesignControls()}
+function saveCustomization(){saveState();toast("Customization saved")}
+function resetWorkspaceLayout(){if(!confirm("Reset page names, module positions and visibility to the default layout? Your calendar, tasks and finance data will be kept."))return;state.settings.workspace=structuredClone(defaultState.settings.workspace);saveState();renderWorkspace();renderCustomizationUI();showPage("customize");toast("Layout reset")}
+function connectSpotify(){toast("Spotify module is ready. Next step: add Spotify OAuth routes to your Cloudflare Worker.")}
+
 /* GOOGLE PLACEHOLDER */
 function syncGoogle(){toast("Google sync is not enabled in static mode. Connect an OAuth backend before storing credentials.")}
 function connectGoogleCalendar(){syncGoogle()}
@@ -885,11 +866,10 @@ function importData(e){
 
 /* INITIAL RENDER */
 function renderAll(){
- applyDesign();renderAlarm();renderCalendar();renderTasks();renderShift();renderPortfolio();renderBudget();renderAI();renderNews();renderGoals();renderRuns();updateClock();
+ applyDesign();applyTypography();applyIdentity();renderWorkspace();renderPageNav();const hash=location.hash.replace("#","");showPage(["operations","finance","media","customize"].includes(hash)?hash:(state.settings.workspace.defaultPage||"operations"),false);renderAlarm();renderCalendar();renderTasks();renderShift();renderPortfolio();renderBudget();renderAI();renderNews();renderGoals();renderRuns();updateClock();renderCustomizationUI();
 }
 renderAll();
-if(location.hash==="#design-lab")openDesignLab();
-window.addEventListener("hashchange",()=>{if(location.hash==="#design-lab")openDesignLab();else if(document.getElementById("designLab")?.classList.contains("active"))closeDesignLab()});
+window.addEventListener("hashchange",()=>{const p=location.hash.replace("#","");if(["operations","finance","media","customize"].includes(p)&&state.settings.workspace.activePage!==p)showPage(p,false)});
 window.addEventListener("beforeunload",saveState);
 </script>
 </body>
