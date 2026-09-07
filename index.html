@@ -112,7 +112,7 @@ button,input,select,textarea{font:inherit}.shell{width:min(1840px,calc(100% - 32
 <div class="modal-backdrop" id="modalBackdrop"><div class="modal"><div class="modal-head"><h2 id="modalTitle">Modal</h2><button class="btn small" onclick="closeModal()">✕</button></div><div class="modal-body" id="modalBody"></div></div></div>
 <div class="toast" id="toast"></div>
 <script>
-const STORAGE_KEY="neon_ops_v5_fresh";
+const STORAGE_KEY="neon_ops_v6";
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const uid=()=>crypto.randomUUID?.()||("id_"+Date.now()+"_"+Math.random().toString(36).slice(2));
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
