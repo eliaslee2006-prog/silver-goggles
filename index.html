@@ -220,7 +220,57 @@ function openRecordModal(opts={}){const r=opts.id?state.records.find(x=>x.id===o
 function toggleAllDay(){const on=$("#allDayToggle").checked;$("#timedFields").style.display=on?'none':'';$("#allDayFields").style.display=on?'':'none'}
 function toggleCustomRepeat(){$("#customRepeat").classList.toggle('show',$("#repeatFreq").value==='custom')}
 function formRecordData(form){const f=Object.fromEntries(new FormData(form)),allDay=!!form.allDay.checked;let start,end;if(allDay){if(!f.startDate||!f.endDate)throw new Error('Choose start and end dates');start=parseLocalDate(f.startDate);end=addDays(parseLocalDate(f.endDate),1)}else{start=new Date(f.startTimed);end=new Date(f.endTimed)}if(!Number.isFinite(start.getTime())||!Number.isFinite(end.getTime())||end<=start)throw new Error('End must be after start');return {type:f.type,title:f.title.trim(),category:f.category,color:f.color,allDay,trackCompletion:!!form.trackCompletion.checked,start:start.toISOString(),end:end.toISOString(),location:f.location||'',reminder:Number(f.reminder)||0,notes:f.notes||'',recurrence:{freq:f.repeatFreq,intervalDays:f.repeatFreq==='custom'?clamp(Number(f.intervalDays)||1,1,365):0,until:f.repeatUntil||''},scope:f.scope||'series'}}
-async function saveRecord(e,id,occKey){e.preventDefault();let data;try{data=formRecordData(e.target)}catch(err){toast(err.message);return}let target;if(!id){target={id:uid(),...data,exceptions:{},attachmentCount:0};delete target.scope;state.records.push(target)}else{const r=state.records.find(x=>x.id===id);if(!r)return;if(!occKey||r.recurrence?.freq==='none'||data.scope==='series'){target=r;Object.assign(r,data,{exceptions:data.scope==='series'?{}:(r.exceptions||{})});delete r.scope}else if(data.scope==='this'){r.exceptions=r.exceptions||{};r.exceptions[occKey]={...(r.exceptions[occKey]||{}),type:data.type,title:data.title,category:data.category,color:data.color,allDay:data.allDay,trackCompletion:data.trackCompletion,start:data.start,end:data.end,location:data.location,notes:data.notes};target=r}else if(data.scope==='following'){r.recurrence=r.recurrence||{};r.recurrence.untilBefore=occKey;const nr={id:uid(),...data,exceptions:{},attachmentCount:r.attachmentCount||0};delete nr.scope;state.records.push(nr);await copyAttachments(r.id,nr.id);target=nr}}const files=[...($("#recordFiles")?.files||[])];if(files.length&&target){const n=await putAttachments(target.id,files);target.attachmentCount=(target.attachmentCount||0)+n}saveState();closeModal();renderCalendar();renderAgenda();toast('Schedule updated')}
+async function saveRecord(e,id,occKey){e.preventDefault();let data;try{data=formRecordData(e.target)}catch(err){toast(err.message);return}let target;if(!id){target={id:uid(),...data,exceptions:{},attachmentCount:0};delete target.scope;state.records.push(target)}else{const r=state.records.find(x=>x.id===id);if(!r)return;if(!occKey||r.recurrence?.freq==='none'||data.scope==='series'){target=r;Object.assign(r,data,{exceptions:data.scope==='series'?{}:(r.exceptions||{})});delete r.scope}else if(data.scope==='this'){r.exceptions=r.exceptions||{};r.exceptions[occKey]={...(r.exceptions[occKey]||{}),type:data.type,title:data.title,category:data.category,color:data.color,allDay:data.allDay,trackCompletion:data.trackCompletion,start:data.start,end:data.end,location:data.location,notes:data.notes};target=r}else if(data.scope==='following'){r.recurrence=r.recurrence||{};r.recurrence.untilBefore=occKey;const nr={id:uid(),...data,exceptions:{},attachmentCount:r.attachmentCount||0};delete nr.scope;state.records.push(nr);await copyAttachments(r.id,nr.id);target=nr}}const files=[...($("#recordFiles")?.files||[])];if(files.length&&target){const n=await putAttachments(target.id,files);target.attachmentCount=(target.attachmentCount||0)+n}saveState();
+
+if (!id && target?.type === "event") {
+  const session = localStorage.getItem("neon_ops_google_session");
+
+  if (session) {
+    try {
+      const response = await fetch(
+        `https://api.eliaslhx.com/api/google/calendar/events/create?session=${encodeURIComponent(session)}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            title: target.title,
+            start: target.start,
+            end: target.end,
+            location: target.location || "",
+            notes: target.notes || ""
+          })
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Google Calendar sync failed");
+      }
+
+      target.googleEventId = result.event?.id || "";
+      target.source = "google";
+      target.syncStatus = "synced";
+      saveState();
+
+      toast("Saved to Neon Ops + Google Calendar");
+    } catch (err) {
+      console.error("Google Calendar sync:", err);
+      toast("Saved locally — Google sync failed");
+    }
+  }
+}
+
+closeModal();
+renderCalendar();
+renderAgenda();
+
+if (!target?.googleEventId) {
+  toast("Schedule updated");
+}
+}}
 async function deleteRecord(id,occKey){const r=state.records.find(x=>x.id===id);if(!r)return;let scope='series';if(occKey&&r.recurrence?.freq!=='none'){scope=$("#recordForm")?.scope?.value||'this'}if(!confirm(scope==='this'?'Delete only this occurrence?':scope==='following'?'Delete this and all following occurrences?':'Delete the entire item/series?'))return;if(scope==='this'){r.exceptions=r.exceptions||{};r.exceptions[occKey]={...(r.exceptions[occKey]||{}),cancelled:true}}else if(scope==='following'){r.recurrence.untilBefore=occKey}else{state.records=state.records.filter(x=>x.id!==id);await deleteAttachments(id)}saveState();closeModal();renderCalendar();renderAgenda();toast('Deleted')}
 async function duplicateRecord(id){const r=state.records.find(x=>x.id===id);if(!r)return;const n={...structuredClone(r),id:uid(),title:r.title+' (Copy)',exceptions:{}};state.records.push(n);await copyAttachments(id,n.id);saveState();closeModal();renderCalendar();renderAgenda();toast('Duplicated')}
 
